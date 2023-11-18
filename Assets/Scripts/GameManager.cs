@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
 
+    public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR 오브젝트)
+
+    public 
+
     void Start()
     {
         
@@ -23,14 +27,15 @@ public class GameManager : MonoBehaviour
     {
         startSceneUIPanel.SetActive(false); // 시작 화면 UI 끄기
         startSceneCam.SetActive(false); // 시작 화면 카메라 끄기
-        playerCam.SetActive(true); // 플레이어 시점으로 이동
+        playerCam.SetActive(true); // 플레이어 시점으로 전환
+
     }
 
     // 시작 메뉴 화면에서 심폐소생술 상황 클릭
     public void startCPR()
     {
         startSituation();
-
+        cprSituation.GetComponent<CPRSituation>().startSituation(); // CPR 상황 시작
     }
 
     // 시작 메뉴 화면에서 뱀에 물리는 상황 클릭
