@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public GameObject player; // 플레이어 객체
 
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
-
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
     void Start()
@@ -75,6 +74,11 @@ public class GameManager : MonoBehaviour
         {
             situationMainTextPanel.SetActive(true);
             situationMainText.text = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
+        }
+
+        if (cpr.isPatientCons) // 환자의 의식을 파악해야 하는 상황
+        {
+            situationMainText.text = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보며\n의식을 파악해 주세요.";
         }
     }
 }

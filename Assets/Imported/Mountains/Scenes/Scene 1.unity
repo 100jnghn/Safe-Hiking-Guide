@@ -10098,6 +10098,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_TagString
+      value: Patient
+      objectReference: {fileID: 0}
     - target: {fileID: 7019088425620113211, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -13034,6 +13038,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2369712856593308033, guid: 730000931cae1454c8083362445e8f75, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2369712856593335393, guid: 730000931cae1454c8083362445e8f75, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34.134
@@ -13116,7 +13124,9 @@ MonoBehaviour:
   moveSpeed: 1.3
   jumpPower: 3.5
   camRotateSpeed: 100
+  canMove: 1
   camera: {fileID: 1794180683}
+  cprSituation: {fileID: 397307121}
 --- !u!136 &277845555
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17555,6 +17565,7 @@ MonoBehaviour:
   player: {fileID: 277845551}
   patient: {fileID: 1814727726}
   isPatientDown: 0
+  isPatientCons: 0
 --- !u!1001 &399519359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -54451,7 +54462,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 800, y: 450}
+  m_SizeDelta: {x: 800, y: 350}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1369793322
 MonoBehaviour:

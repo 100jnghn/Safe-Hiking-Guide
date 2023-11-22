@@ -10,6 +10,7 @@ public class CPRSituation : MonoBehaviour
     public GameObject patient; // 환자(쓰러져서 CPR 받는 사람)
 
     public bool isPatientDown; // 환자가 쓰러진 상황인가요?
+    public bool isPatientCons; // 환자 의식을 파악해야 하나요?
 
     private float time = 0f;
 
@@ -51,6 +52,7 @@ public class CPRSituation : MonoBehaviour
 
 
         yield return null;
+        yield break;
     }
 
     // 환자를 앞으로 이동시키는 함수
