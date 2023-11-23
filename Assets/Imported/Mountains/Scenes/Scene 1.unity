@@ -13030,6 +13030,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2369712856581739831, guid: 730000931cae1454c8083362445e8f75, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2369712856581739835, guid: 730000931cae1454c8083362445e8f75, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2369712856581739837, guid: 730000931cae1454c8083362445e8f75, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2369712856593308033, guid: 730000931cae1454c8083362445e8f75, type: 3}
       propertyPath: m_Name
       value: Player
@@ -13129,6 +13141,7 @@ MonoBehaviour:
   camera: {fileID: 1794180683}
   cprSituation: {fileID: 397307121}
   rayPosition: {fileID: 1902922520}
+  rayCollObject: {fileID: 0}
   rayDistance: 15
 --- !u!136 &277845555
 CapsuleCollider:
@@ -17569,6 +17582,7 @@ MonoBehaviour:
   patient: {fileID: 1814727726}
   isPatientDown: 0
   isPatientCons: 0
+  didPatientCons: 0
   isHelpOther: 0
 --- !u!1001 &399519359
 PrefabInstance:
