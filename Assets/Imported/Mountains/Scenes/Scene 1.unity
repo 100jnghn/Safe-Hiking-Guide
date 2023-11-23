@@ -1276,6 +1276,187 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 155075078908560349, guid: 03129de0bceaad4418f7f0375b4b3c38, type: 3}
   m_PrefabInstance: {fileID: 31023396}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &37781885
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_Name
+      value: Patient CPR
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_TagString
+      value: Patient
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 32.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 101.917
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 15.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072703707480030233, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019088425620113211, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019088425620113215, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 8c28075e6e1a5c34ca899fd618879dd4, type: 3}
+    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: b591cb27b9b54924d8df7b3060a5cb97, type: 2}
+    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+      propertyPath: m_WarningMessage
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'Male'\n\tTransform 'LowManRightLeg'\n\tTransform
+        'LowManLeftHandMiddle1'\n\tTransform 'LowManLeftUpLeg'\n\tTransform 'LowManRightShoulder'\n\tTransform
+        'LowManLeftHandPinky2'\n\tTransform 'LowManLeftFoot'\n\tTransform 'LowManRightFoot'\n\tTransform
+        'LowManLeftToeBase'\n\tTransform 'LowManLeftHandIndex1'\n\tand more ...\n\tFrom
+        animation clip 'Fall Down'"
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 37781889}
+    - targetCorrespondingSourceObject: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 37781888}
+    - targetCorrespondingSourceObject: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 37781887}
+  m_SourcePrefab: {fileID: 100100000, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+--- !u!1 &37781886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3733192570276357795, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+  m_PrefabInstance: {fileID: 37781885}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &37781887
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37781886}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 31f6676788424824f81d41d250333da1, type: 3}
+  m_Controller: {fileID: 9100000, guid: fac260a2114b0434ead873afbd7809a7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &37781888
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37781886}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!54 &37781889
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37781886}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1001 &37865338
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10042,111 +10223,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8233102405603228788, guid: 30cd4b8a989daaa4fbb273ee70bf99f6, type: 3}
   m_PrefabInstance: {fileID: 218660520}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &220208636
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 31.73
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 101.781
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 14.79
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.055522524
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9984575
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 173.634
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620020073, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_Name
-      value: Patient CPR
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_TagString
-      value: Patient
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620113211, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425620113215, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_Avatar
-      value: 
-      objectReference: {fileID: 9000000, guid: 8c28075e6e1a5c34ca899fd618879dd4, type: 3}
-    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b591cb27b9b54924d8df7b3060a5cb97, type: 2}
-    - target: {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'Male'\n\tTransform 'LowManRightLeg'\n\tTransform
-        'LowManLeftHandMiddle1'\n\tTransform 'LowManLeftUpLeg'\n\tTransform 'LowManRightShoulder'\n\tTransform
-        'LowManLeftHandPinky2'\n\tTransform 'LowManLeftFoot'\n\tTransform 'LowManRightFoot'\n\tTransform
-        'LowManLeftToeBase'\n\tTransform 'LowManLeftHandIndex1'\n\tand more ...\n\tFrom
-        animation clip 'Fall Down'"
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7019088425629644029, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1814727730}
-    - targetCorrespondingSourceObject: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1814727729}
-    - targetCorrespondingSourceObject: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1814727733}
-  m_SourcePrefab: {fileID: 100100000, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
 --- !u!1001 &221268915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17581,7 +17657,7 @@ Transform:
   m_GameObject: {fileID: 397307121}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 34.134, y: 101.917, z: 17.592}
+  m_LocalPosition: {x: 33.55, y: 101.917, z: 17.592}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17601,7 +17677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patientMoveSpeed: 1
   player: {fileID: 277845551}
-  patient: {fileID: 1814727726}
+  patient: {fileID: 37781886}
   isPatientDown: 0
   isPatientCons: 0
   didPatientCons: 0
@@ -71625,82 +71701,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3076980170538372957, guid: f9ba43b4d4d826f47aa990da47cf55a1, type: 3}
   m_PrefabInstance: {fileID: 1813265215}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1814727726 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7019088425620113033, guid: 5da73550c90a266498e0fcd9c6437148, type: 3}
-  m_PrefabInstance: {fileID: 220208636}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &1814727729
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814727726}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.3
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
---- !u!54 &1814727730
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814727726}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
---- !u!95 &1814727733
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1814727726}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 8c28075e6e1a5c34ca899fd618879dd4, type: 3}
-  m_Controller: {fileID: 9100000, guid: fac260a2114b0434ead873afbd7809a7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1816068385
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83857,8 +83857,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1441197577}
   - {fileID: 1472223504}
-  - {fileID: 220208636}
   - {fileID: 277845550}
   - {fileID: 1342716020}
   - {fileID: 1796866196}
   - {fileID: 397307122}
+  - {fileID: 37781885}

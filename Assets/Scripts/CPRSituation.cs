@@ -38,7 +38,7 @@ public class CPRSituation : MonoBehaviour
 
 
         // 여기에 환자가 걷는 애니메이션 추가
-        patientAnimator.SetBool("IsWalk", true);
+        patientAnimator.SetBool("isWalking", true);
 
 
 
@@ -55,7 +55,7 @@ public class CPRSituation : MonoBehaviour
         isPatientDown = true;
 
         // 여기에 환자가 쓰러지는 애니메이션 추가
-        patientAnimator.SetBool("IsWalking", false);
+        patientAnimator.SetBool("isWalking", false);
             //patientAnimator.SetBool("IsFall", true);
         
 
