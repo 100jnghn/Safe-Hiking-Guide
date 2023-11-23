@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Cursor = UnityEngine.Cursor;
 
 public class Player : MonoBehaviour
 {
@@ -15,16 +16,24 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigidbody;
 
+    private RaycastHit hit; // Raycast 충돌 감지
+
     public GameObject camera; // 플레이어 시점의 카메라
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
+    public GameObject rayPosition; // ray를 발사할 위치
+    public GameObject rayCollObject; // ray와 충돌한 오브젝트
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
     private float xRotate, yRotate, xRotateMove, yRotateMove; // 마우스에 의한 카메라 회전에 관련된 변수들
+    public float rayDistance = 15f; // Ray의 길이
 
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         cpr = cprSituation.GetComponent<CPRSituation>();
+
+        Cursor.lockState = CursorLockMode.Locked; // 커서 화면 중앙에 고정
+        Cursor.visible = false; // 커서가 보이지 않게 함
     }
 
     void Update()
@@ -32,6 +41,8 @@ public class Player : MonoBehaviour
         doMove(); // 플레이어 이동
         doRotateCamera(); // 마우스로 카메라 회전
         doAction(); // 액션 키 입력(R키)
+        shotRay(); // 레이를 쏘아주는 함수
+        rayCollider();
     }
 
     // 플레이어 이동 함수
@@ -82,6 +93,20 @@ public class Player : MonoBehaviour
 
         camera.transform.eulerAngles = new Vector3(xRotate, yRotate, 0); // 카메라 회전
         transform.eulerAngles = new Vector3(0, yRotate, 0); // 플레이어 회전
+    }
+
+    void shotRay()
+    {
+        Debug.DrawRay(rayPosition.transform.position, rayPosition.transform.position * rayDistance, Color.red);
+    }
+
+    // ray의 충돌을 처리하는 함수
+    void rayCollider()
+    {
+        if (Physics.Raycast(rayPosition.transform.position, rayPosition.transform.forward, out hit, rayDistance))
+        {
+            rayCollObject = hit.transform.gameObject; // rayCollObject를 ray가 충돌한 오브젝트로 선언
+        }
     }
 
     // R 키를 눌러 액션 (3초 이상 누르면 true)

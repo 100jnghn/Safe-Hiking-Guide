@@ -88,11 +88,10 @@ public class GameManager : MonoBehaviour
         }
 
         // 의식을 파악해야 하는 상황에서 R키 액션을 취함
-        if (cpr.isPatientCons && !cpr.isHelpOther && playerScript.doAction())
+        if (cpr.isPatientCons && !cpr.isHelpOther && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
         {
             situationMainText.color = Color.yellow;
             situationMainText.text = "\"괜찮으세요?\"";
-            cpr.isHelpOther = true;
         } 
 
         // 다른 사람에게 도움을 요청해야 하는 상황
