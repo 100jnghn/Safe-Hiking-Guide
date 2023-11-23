@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     private float waitTimer = 0f; // 액션 후 일정 시간을 기다리기 위해 사용
 
+    private string uiStr; // 자막에 들어갈 내용
+
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
@@ -78,28 +80,63 @@ public class GameManager : MonoBehaviour
         if (cpr.isPatientDown && !cpr.isPatientCons) 
         {
             situationMainTextPanel.SetActive(true);
-            situationMainText.text = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
+            uiStr = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
+            setText(situationMainText, uiStr);
         }
 
         // 환자의 의식을 파악해야 하는 상황
         if (cpr.isPatientCons && !cpr.isHelpOther) 
         {
-            situationMainText.text = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식을 파악해 주세요.";
+            uiStr = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식을 파악해 주세요.";
+            setText(situationMainText, uiStr);
         }
 
         // 의식을 파악해야 하는 상황에서 R키 액션을 취함
-        if (cpr.isPatientCons && !cpr.isHelpOther && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        if (cpr.isPatientCons && !cpr.didPatientCons && !cpr.isHelpOther && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
         {
+            uiStr = "\"괜찮으세요?\"";
             situationMainText.color = Color.yellow;
-            situationMainText.text = "\"괜찮으세요?\"";
+            setText(situationMainText, uiStr);
+
+            cpr.didPatientCons = true; // 환자 의식 파악 완료함
         } 
+
+        // 의식 파악까지 완료한 상황 (자막 유지)
+        if (cpr.didPatientCons)
+        {
+            uiStr = "\"괜찮으세요?\"";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                cpr.isHelpOther = true; // 다른 사람들에게 도움을 요청해야함
+            }));
+
+        }
 
         // 다른 사람에게 도움을 요청해야 하는 상황
         if (cpr.isHelpOther)
         {
+            uiStr = "대충 도움 요청해야 한다는 내용";
             situationMainText.color = Color.white;
-            situationMainText.text = "주변을 둘러보며 다른 사람들에게 도움을 요청해야 합니다.";
+            setText(situationMainText, uiStr);
         }
+
+    }
+
+    // delay만큼 대기하는 코루틴
+    private IEnumerator DelayedAction(float delay, System.Action action)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
+
+    // Text의 내용을 변경
+    private void setText(Text text, string str)
+    {
+        text.text = str;
     }
 
 }

@@ -11,6 +11,7 @@ public class CPRSituation : MonoBehaviour
 
     public bool isPatientDown;  // 환자가 쓰러진 상황인가요?
     public bool isPatientCons;  // 환자 의식을 파악해야 하나요?
+    public bool didPatientCons; // 환자 의식을 파악 완료했는지?
     public bool isHelpOther;    // 다른 사람에게 도움을 요청해야 하는 상황?
 
     private float time = 0f;
@@ -46,7 +47,6 @@ public class CPRSituation : MonoBehaviour
             yield return null;
         }
         time = 0f;
-
 
         isPatientDown = true;
         // 여기에 환자가 쓰러지는 애니메이션 추가
