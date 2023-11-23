@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 1.3f; // 이동 속도
     public float jumpPower = 3.5f; // 점프할 때 리지드바디에 가해지는 힘
     public float camRotateSpeed = 300f; // 마우스 이동에 의한 카메라 회전 속도
+    public float inputTimer = 0f; // R키 입력 시간을 저장 // 행동에 대한 액션 판별 용도
 
     public bool canMove; // 플레이어가 움직일 수 있는 상태인가요?
 
@@ -29,6 +31,7 @@ public class Player : MonoBehaviour
     {
         doMove(); // 플레이어 이동
         doRotateCamera(); // 마우스로 카메라 회전
+        doAction(); // 액션 키 입력(R키)
     }
 
     // 플레이어 이동 함수
@@ -79,6 +82,26 @@ public class Player : MonoBehaviour
 
         camera.transform.eulerAngles = new Vector3(xRotate, yRotate, 0); // 카메라 회전
         transform.eulerAngles = new Vector3(0, yRotate, 0); // 플레이어 회전
+    }
+
+    // R 키를 눌러 액션 (3초 이상 누르면 true)
+    public bool doAction()
+    {
+        bool action = false;
+        if (Input.GetKey(KeyCode.R))
+        {
+            inputTimer += Time.deltaTime;
+            if (inputTimer > 3f)
+            {
+                action =  true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.R)) // R 키에서 떼면 inputTimer 초기화
+        {
+            action = false;
+            inputTimer = 0f;
+        }
+        return action;
     }
 
     private void OnCollisionEnter(Collision collision)

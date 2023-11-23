@@ -13,13 +13,17 @@ public class GameManager : MonoBehaviour
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
     public GameObject player; // 플레이어 객체
+    private Player playerScript; // 플레이어 스크립트
 
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
+    private float waitTimer = 0f; // 액션 후 일정 시간을 기다리기 위해 사용
+
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
+        playerScript = player.GetComponent<Player>();
     }
 
     void Update()
@@ -70,15 +74,26 @@ public class GameManager : MonoBehaviour
     // CPR 상황에서 UI 관리
     public void setUICPR()
     {
-        if (cpr.isPatientDown) // 환자가 쓰러졌다면
+        // 환자가 쓰러졌다면
+        if (cpr.isPatientDown && !cpr.isPatientCons) 
         {
             situationMainTextPanel.SetActive(true);
             situationMainText.text = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
         }
 
-        if (cpr.isPatientCons) // 환자의 의식을 파악해야 하는 상황
+        // 환자의 의식을 파악해야 하는 상황
+        if (cpr.isPatientCons && !cpr.isHelpOther) 
         {
-            situationMainText.text = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보며\n의식을 파악해 주세요.";
+            situationMainText.text = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식을 파악해 주세요.";
         }
+
+        // 의식을 파악해야 하는 상황에서 R키 액션을 취함
+        if (cpr.isPatientCons && playerScript.doAction())
+        {
+            situationMainText.color = Color.yellow;
+            situationMainText.text = "\"괜찮으세요?\"";
+            cpr.isHelpOther = true;
+        } 
     }
+
 }

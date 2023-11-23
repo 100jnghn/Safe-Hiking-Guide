@@ -9,8 +9,9 @@ public class CPRSituation : MonoBehaviour
     public GameObject player; // 플레이어(CPR을 하는 사람)
     public GameObject patient; // 환자(쓰러져서 CPR 받는 사람)
 
-    public bool isPatientDown; // 환자가 쓰러진 상황인가요?
-    public bool isPatientCons; // 환자 의식을 파악해야 하나요?
+    public bool isPatientDown;  // 환자가 쓰러진 상황인가요?
+    public bool isPatientCons;  // 환자 의식을 파악해야 하나요?
+    public bool isHelpOther;    // 다른 사람에게 도움을 요청해야 하는 상황?
 
     private float time = 0f;
 
