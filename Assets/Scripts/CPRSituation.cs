@@ -52,6 +52,7 @@ public class CPRSituation : MonoBehaviour
         // 여기에 환자가 쓰러지는 애니메이션 추가
 
 
+
         yield return null;
         yield break;
     }
