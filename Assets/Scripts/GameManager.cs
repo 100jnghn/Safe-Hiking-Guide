@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
+        //Fracture = FractureStituation.
         playerScript = player.GetComponent<Player>();
     }
 
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     // 시작 메뉴 화면에서 골절 상황 클릭
     public void startFracture()
     {
+        //player.transform.position = 
         startSituation();
 
     }
