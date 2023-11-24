@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
         // 환자의 의식을 파악해야 하는 상황
         if (cpr.isPatientCons && !cpr.isHelpOther) 
         {
-            uiStr = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식을 파악해 주세요.";
+            uiStr = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식과 호흡 여부를 파악해 주세요.";
             setText(situationMainText, uiStr);
         }
 
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
         } 
 
         // 의식 파악까지 완료한 상황 (자막 유지)
-        if (cpr.didPatientCons)
+        if (cpr.didPatientCons && !cpr.isHelpOther)
         {
             uiStr = "\"괜찮으세요?\"";
             situationMainText.color = Color.yellow;
@@ -119,11 +119,47 @@ public class GameManager : MonoBehaviour
         }
 
         // 다른 사람에게 도움을 요청해야 하는 상황
-        if (cpr.isHelpOther)
+        if (cpr.isHelpOther && !cpr.didCall119 && !cpr.didCallAED)
         {
-            uiStr = "대충 도움 요청해야 한다는 내용";
+            uiStr = "환자가 의식이 없습니다.\n주변 사람들에게 도움을 요청하고 CPR을 수행하세요.";
             situationMainText.color = Color.white;
             setText(situationMainText, uiStr);
+        }
+
+        // 119 불러달라고 해야 하는 순서
+        if (cpr.isHelpOther && !cpr.didCall119 && !cpr.didCallAED && playerScript.rayCollObject.name == "For CPR 119" && playerScript.doAction())
+        {
+            uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+            cpr.didCall119 = true;
+        }
+
+        // 119 불렀으면 자막 유지
+        if (cpr.isHelpOther && cpr.didCall119 && !cpr.didCallAED)
+        {
+            setText(situationMainText, uiStr);
+        }
+
+        // AED 요청해야 하는 순서
+        if (cpr.isHelpOther && cpr.didCall119 && !cpr.didCallAED && playerScript.rayCollObject.name == "For CPR AED" && playerScript.doAction())
+        {
+            uiStr = "~~~이신 분 AED를 가져다 주세요.";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+            cpr.didCallAED = true;
+        }
+
+        // AED 요청했으면 자막 유지
+        if (cpr.isHelpOther && cpr.didCall119 && cpr.didCallAED)
+        {
+            setText(situationMainText, uiStr);
+
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                cpr.isChestPress = true; // 다른 사람들에게 도움을 요청해야함
+            }));
         }
 
     }
