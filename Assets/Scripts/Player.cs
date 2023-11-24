@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
 
     private Rigidbody rigidbody;
 
+    public Camera mainCamera;
+    private Ray ray;
     private RaycastHit hit; // Raycast 충돌 감지
 
     public GameObject camera; // 플레이어 시점의 카메라
@@ -97,13 +99,14 @@ public class Player : MonoBehaviour
 
     void shotRay()
     {
-        Debug.DrawRay(rayPosition.transform.position, rayPosition.transform.position * rayDistance, Color.red);
+        Debug.DrawLine(ray.origin, hit.point, Color.red);
+        ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
     }
 
     // ray의 충돌을 처리하는 함수
     void rayCollider()
     {
-        if (Physics.Raycast(rayPosition.transform.position, rayPosition.transform.forward, out hit, rayDistance))
+        if (Physics.Raycast(ray, out hit, rayDistance))
         {
             rayCollObject = hit.transform.gameObject; // rayCollObject를 ray가 충돌한 오브젝트로 선언
         }
