@@ -73,7 +73,7 @@ public class CPRSituation : MonoBehaviour
     private void patientFalling()
     {
         patientAnimator.SetBool("isFalling", true);
-        capsuleCollider.direction = 2; //콜라이더의 방향 Z축으로d 설정 (0: X축, 1: Y축, 2: Z축)
+        capsuleCollider.direction = 2; //콜라이더의 방향 Z축으로 설정 (0: X축, 1: Y축, 2: Z축)
         capsuleCollider.center = new Vector3(0f, 0.2f, 0f); //중심 위치 조정
         capsuleCollider.radius = 0.3f; //radius 설정
     }
@@ -85,7 +85,7 @@ public class CPRSituation : MonoBehaviour
         patientAnimator.SetBool("isFalling", false);
         patientAnimator.SetBool("getUp", true);
         capsuleCollider.direction = 1; // 기본 방향 (Y축)
-        capsuleCollider.center = Vector3.zero; // 기본 중심 위치
+        capsuleCollider.center = new Vector3(0f, 0.9f, 0f); // 기본 중심 위치로
         capsuleCollider.height = 0.9f; // 기본 높이
     }
 

@@ -17751,6 +17751,7 @@ MonoBehaviour:
   didCall119: 0
   didCallAED: 0
   isChestPress: 0
+  capsuleCollider: {fileID: 0}
 --- !u!1001 &399519359
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36696,6 +36697,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7954776021054432867, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a8555c0cff30527479e32562cef9141f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -83814,6 +83819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7954776021054432867, guid: 64afc01b4e7549b4898ddab877a0bd88, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a8555c0cff30527479e32562cef9141f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
