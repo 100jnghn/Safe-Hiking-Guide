@@ -41,7 +41,7 @@ public class CPRSituation : MonoBehaviour
         patient.SetActive(true);
         Debug.Log("CPR Situation Start");
 
-        yield return new WaitForSeconds(1f); // 1초 대기 후 시작
+        yield return new WaitForSeconds(2f); // 2초 대기 후 시작
 
 
         // 여기에 환자가 걷는 애니메이션 추가
