@@ -23,11 +23,13 @@ public class Player : MonoBehaviour
 
     public GameObject camera; // 플레이어 시점의 카메라
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
+    public GameObject fractureSituation;// Fracture 상황을 관리 (Start Position Fracture)
     public GameObject rayPosition; // ray를 발사할 위치
     public GameObject rayCollObject; // ray와 충돌한 오브젝트
     public GameObject standPosition; // 플레이어가 서있을 때 시점이 되는 위치
     public GameObject sitPosition; // 플레이어가 앉았을 때 시점이 되는 위치
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
+    private FractureSituation fracture;// fractureSituation 오브젝트의 Component인 FractureSituation 스크립트를 가져옴
 
     private float xRotate, yRotate, xRotateMove, yRotateMove; // 마우스에 의한 카메라 회전에 관련된 변수들
     public float rayDistance = 15f; // Ray의 길이
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         cpr = cprSituation.GetComponent<CPRSituation>();
+        fracture = fractureSituation.GetComponent<FractureSituation>();
 
         Cursor.lockState = CursorLockMode.Locked; // 커서 화면 중앙에 고정
         Cursor.visible = false; // 커서가 보이지 않게 함

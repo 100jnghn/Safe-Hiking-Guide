@@ -18,14 +18,20 @@ public class GameManager : MonoBehaviour
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
-    private float waitTimer = 0f; // 액션 후 일정 시간을 기다리기 위해 사용
+    public GameObject fractureSituation;// Fracture 상황을 관리 (Start Position Fracture)
+    private FractureSituation fracture;// fractureSituation 오브젝트의 Component인 FractureSituation 스크립트를 가져옴
 
+
+
+
+    private float waitTimer = 0f; // 액션 후 일정 시간을 기다리기 위해 사용
+   
     private string uiStr; // 자막에 들어갈 내용
 
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
-        //Fracture = FractureStituation.
+        fracture = fractureSituation.GetComponent<FractureSituation>();
         playerScript = player.GetComponent<Player>();
     }
 
@@ -63,8 +69,9 @@ public class GameManager : MonoBehaviour
     // 시작 메뉴 화면에서 골절 상황 클릭
     public void startFracture()
     {
-        //player.transform.position = 
+        player.transform.position = fractureSituation.transform.position;// 시작 위치 설정
         startSituation();
+        fracture.StartCoroutine("startSituation");
 
     }
 
@@ -163,6 +170,27 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    public void setUIFractyre()
+    {
+        // 환자가 쓰러졌다면
+        if (cpr.isPatientDown && !cpr.isPatientCons)
+        {
+            situationMainTextPanel.SetActive(true);
+            uiStr = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
+            setText(situationMainText, uiStr);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
     // delay만큼 대기하는 코루틴
     private IEnumerator DelayedAction(float delay, System.Action action)
