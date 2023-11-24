@@ -55,13 +55,34 @@ public class CPRSituation : MonoBehaviour
         isPatientDown = true;
 
         // 여기에 환자가 쓰러지는 애니메이션 추가
-        patientAnimator.SetBool("isWalking", false);
-            //patientAnimator.SetBool("IsFall", true);
+        patientAnimator.SetBool("isFalling", true);
         
 
         yield return null;
         yield break;
     }
+
+
+
+
+
+    private void patientGetUp()
+    {
+        patientAnimator.SetBool("isFalling", false);
+        patientAnimator.SetBool("getUp", true);
+    }
+
+    //일정 시간 이후 다시 idle상태로 갈 때.(getUp 후 회복하는 상황일 경우)
+    private void patientIdle()
+    {
+        patientAnimator.SetBool("getUp", false);
+        patientAnimator.SetBool("idle", true);
+    }
+
+
+
+
+
 
     // 환자를 앞으로 이동시키는 함수
     private void moveForwardPatient()
