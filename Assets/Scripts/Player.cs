@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public float inputTimer = 0f; // R키 입력 시간을 저장 // 행동에 대한 액션 판별 용도
 
     public bool canMove; // 플레이어가 움직일 수 있는 상태인가요?
+    public bool isSit; // 플레이어가 앉아있나요?
 
     private Rigidbody rigidbody;
 
@@ -24,6 +25,8 @@ public class Player : MonoBehaviour
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
     public GameObject rayPosition; // ray를 발사할 위치
     public GameObject rayCollObject; // ray와 충돌한 오브젝트
+    public GameObject standPosition; // 플레이어가 서있을 때 시점이 되는 위치
+    public GameObject sitPosition; // 플레이어가 앉았을 때 시점이 되는 위치
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
     private float xRotate, yRotate, xRotateMove, yRotateMove; // 마우스에 의한 카메라 회전에 관련된 변수들
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
         doAction(); // 액션 키 입력(R키)
         shotRay(); // 레이를 쏘아주는 함수
         rayCollider();
+        doSit(); // 플레이어가 앉는 기능 (C키 입력)
     }
 
     // 플레이어 이동 함수
@@ -79,6 +83,24 @@ public class Player : MonoBehaviour
                 rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             }
         }    
+    }
+
+    // 플레이어가 앉는 기능
+    void doSit()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (!isSit)
+            {
+                camera.transform.position = sitPosition.transform.position;
+                isSit = true;
+            }
+            else
+            {
+                camera.transform.position = standPosition.transform.position;
+                isSit = false;
+            }
+        }      
     }
 
     // 카메라 회전하는 함수 
