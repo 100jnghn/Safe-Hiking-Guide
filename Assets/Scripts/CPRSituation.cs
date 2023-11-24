@@ -18,6 +18,7 @@ public class CPRSituation : MonoBehaviour
     public bool isChestPress; // 가슴 압박을 해야 하는 순서?
 
     private Animator patientAnimator; //환자 Animator 컴포넌트
+    public CapsuleCollider capsuleCollider; // 캡슐 콜라이더 컴포넌트
 
 
     private float time = 0f;
@@ -25,6 +26,8 @@ public class CPRSituation : MonoBehaviour
     void Start()
     {
         patientAnimator = patient.GetComponent<Animator>();
+        capsuleCollider = patient.GetComponent<CapsuleCollider>();
+        
     }
 
     void Update()
@@ -59,24 +62,34 @@ public class CPRSituation : MonoBehaviour
         isPatientDown = true;
 
         // 여기에 환자가 쓰러지는 애니메이션 추가
-        patientAnimator.SetBool("isFalling", true);
-        
+        patientFalling();
+
 
         yield return null;
         yield break;
     }
 
 
+    private void patientFalling()
+    {
+        patientAnimator.SetBool("isFalling", true);
+        capsuleCollider.direction = 2; //콜라이더의 방향 Z축으로d 설정 (0: X축, 1: Y축, 2: Z축)
+        capsuleCollider.center = new Vector3(0f, 0.2f, 0f); //중심 위치 조정
+        capsuleCollider.radius = 0.3f; //radius 설정
+    }
 
 
 
-    private void patientGetUp()
+    private void patientGetUp()//환자 일어날 때
     {
         patientAnimator.SetBool("isFalling", false);
         patientAnimator.SetBool("getUp", true);
+        capsuleCollider.direction = 1; // 기본 방향 (Y축)
+        capsuleCollider.center = Vector3.zero; // 기본 중심 위치
+        capsuleCollider.height = 0.9f; // 기본 높이
     }
 
-    //일정 시간 이후 다시 idle상태로 갈 때.(getUp 후 회복하는 상황일 경우)
+    //일정 시간 이후 다시 idle상태로 갈 때(getUp 후 회복하는 상황일 경우)
     private void patientIdle()
     {
         patientAnimator.SetBool("getUp", false);
