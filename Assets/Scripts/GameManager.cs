@@ -25,18 +25,18 @@ public class GameManager : MonoBehaviour
     public GameObject fractureSituation;// Fracture 상황을 관리 (Start Position Fracture)
     private FractureSituation fracture;// fractureSituation 오브젝트의 Component인 FractureSituation 스크립트를 가져옴
 
-
-
-
-    private float waitTimer = 0f; // 액션 후 일정 시간을 기다리기 위해 사용
-   
     private string uiStr; // 자막에 들어갈 내용
+
+    public enum Mode { Nothing, CPR, Fracture, Snake, Bee };
+    public Mode mode; // 현재 어떤 모드인지 저장
 
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
         fracture = fractureSituation.GetComponent<FractureSituation>();
         playerScript = player.GetComponent<Player>();
+
+        mode = Mode.Nothing; // 시작은 아무런 모드가 아닌 상태
     }
 
     void Update()
@@ -47,12 +47,24 @@ public class GameManager : MonoBehaviour
     // 상황 시작
     public void startSituation()
     {
+        mode = Mode.CPR; // 현재 모드를 CPR 모드로
+
         startSceneUIPanel.SetActive(false); // 시작 화면 UI 끄기
         startSceneCam.SetActive(false); // 시작 화면 카메라 끄기
         player.SetActive(true); // 플레이어 활성화
         playerCam.SetActive(true); // 플레이어 시점으로 전환
 
         situationUIPanel.SetActive(true); // Situation의 UI 켜기
+    }
+
+    // 상황 끝
+    public void finishSituation()
+    {
+        // 모드 초기화
+        // 각 상황들 변수 초기화
+        // 각 상황들 오브젝트 위치 초기화
+        // 헬리콥터 위치 초기화
+        // UI 세팅
     }
 
     // 시작 메뉴 화면에서 심폐소생술 상황 클릭
@@ -73,6 +85,8 @@ public class GameManager : MonoBehaviour
     // 시작 메뉴 화면에서 골절 상황 클릭
     public void startFracture()
     {
+        mode = Mode.Fracture; // (추가됨 :) 현재 모드를 골절 모드로
+
         player.transform.position = fractureSituation.transform.position;// 시작 위치 설정
         startSituation();
         fracture.StartCoroutine("startSituation");
