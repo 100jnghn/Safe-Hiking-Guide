@@ -13,19 +13,20 @@ public class Hellicopter : MonoBehaviour
     public Transform startPos; // 헬리콥터 시작 위치
     public Transform destinationCPR; // CPR 상황 도착 위치
 
-    public float rotateSpeed = 300f; // 프로펠러 회전 속도
+    public AudioSource sound; // 헬리콥터 소리
 
-    public bool canMove; // true가 되면 헬기가 이동합니다.
+    public float rotateSpeed = 300f; // 프로펠러 회전 속도
 
     void Start()
     {
-        setStartPos();
+        setStartPos(); // 시작 위치로 세팅
+        sound.Play(); // 소리 재생
     }
 
     void Update()
     {
-        moveHellicopter();
-        spinPropeller();
+        moveHellicopter(); // 목표 위치로 이동
+        spinPropeller(); // 프로펠러 회전
     }
 
     // 헬기를 출발 위치로 이동시킴
@@ -35,11 +36,11 @@ public class Hellicopter : MonoBehaviour
         transform.rotation = startPos.rotation; // rotation 설정
     }
 
-    // 프로펠러 회전 + 헬기 소리
+    // 프로펠러 회전
     public void spinPropeller()
     {
-        propeller.transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed);
-        propellerBack.transform.Rotate(Vector3.right * Time.deltaTime * rotateSpeed);
+        propeller.transform.Rotate(Vector3.up * Time.deltaTime * rotateSpeed); // 프로펠러 회전
+        propellerBack.transform.Rotate(Vector3.right * Time.deltaTime * rotateSpeed); // 뒤쪽 프로펠러 회전
     }
 
     // 헬리콥터를 위치로 이동시킴
