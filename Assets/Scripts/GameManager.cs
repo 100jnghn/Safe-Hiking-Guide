@@ -7,8 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public GameObject startSceneUIPanel; // 시작 화면 UI
     public GameObject situationUIPanel; // 상황들의 UI
-    public Text situationMainText; // 각 상황에서의 메인 자막 text
     public GameObject situationMainTextPanel; // 자막 패널
+    
+    public Text situationMainText; // 각 상황에서의 메인 자막 text
+
+    public GameObject chestPressHintImg; // 가슴 압박 힌트 이미지
+    public GameObject artificialResHintImg; // 인공호흡 힌트 이미지
 
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
@@ -167,6 +171,71 @@ public class GameManager : MonoBehaviour
             {
                 cpr.isChestPress = true; // 다른 사람들에게 도움을 요청해야함
             }));
+        }
+
+        // 가슴 압박 수행해야 하는 순서
+        if (cpr.isChestPress && !cpr.didChestPress)
+        {
+            uiStr = "이미지를 참고하여 정확한 자세로 가슴 압박을 수행하세요.";
+            situationMainText.color = Color.white;
+            setText(situationMainText, uiStr);
+
+            // ----- 이미지 띄우는 코드 작성 ----- //
+            chestPressHintImg.SetActive(true);
+        }
+
+        // 가슴 압박을 수행
+        if (cpr.isChestPress && !cpr.didChestPress && playerScript.rayCollObject.name == "Patient CPR" && playerScript.doAction())
+        {
+            uiStr = "가슴 압박은 분당 100~120회로 강하고 규칙적이게 수행해야 합니다.";
+            setText(situationMainText, uiStr);
+
+            cpr.didChestPress = true;       
+        }
+
+        // 가슴 압박 수행 완료
+        if (cpr.isChestPress && cpr.didChestPress)
+        {
+            // ----- 이미지 다시 안 보이게 ----- //
+            chestPressHintImg.SetActive(false);
+
+            uiStr = "가슴 압박은 분당 100~120회로 강하고 규칙적이게 수행해야 합니다.";
+            setText(situationMainText, uiStr);
+
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                cpr.isArtificialRes = true; // 인공호흡을 수행해야 함
+            }));
+        }
+        
+        // 인공호흡을 수행해야 하는 순서
+        if (cpr.isArtificialRes && !cpr.didArtificialRes)
+        {
+            uiStr = "환자의 머리를 젖혀 기도를 확보하고\n 이미지를 참고하여 정확한 자세로 인공호흡을 수행하세요";
+            setText(situationMainText, uiStr);
+
+            // ----- 이미지를 띄우는 코드 작성 ----- //
+            artificialResHintImg.SetActive(true);
+        }
+
+        // 인공호흡을 수행
+        if (cpr.isArtificialRes && !cpr.didArtificialRes && playerScript.rayCollObject.name == "Patient CPR" && playerScript.doAction())
+        {
+            uiStr = "30회 가슴압박, 2회 인공호흡을 119가 도착할 때까지 반복 시행해 주세요";
+            setText(situationMainText, uiStr);
+
+            cpr.didArtificialRes = true;
+        }
+
+        // 인공호흡 수행 완료
+        if (cpr.isArtificialRes && cpr.didArtificialRes)
+        {
+            // ----- 이미지 다시 안 보이게 ----- //
+            artificialResHintImg.SetActive(false);
+
+            uiStr = "30회 가슴압박, 2회 인공호흡을 119가 도착할 때까지 반복 시행해 주세요";
+            setText(situationMainText, uiStr);
         }
 
     }
