@@ -3076,6 +3076,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6409180345755935849, guid: 03cc72561cbb9e546b41049099284b6b, type: 3}
   m_PrefabInstance: {fileID: 59754125}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &61656618 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
+  m_PrefabInstance: {fileID: 1654205943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &63352985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6157,7 +6162,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &126527351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17963,6 +17968,7 @@ MonoBehaviour:
   didChestPress: 0
   isArtificialRes: 0
   didArtificialRes: 0
+  finishCPR: 0
   capsuleCollider: {fileID: 0}
 --- !u!1001 &399519359
 PrefabInstance:
@@ -31921,6 +31927,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 761882717}
   m_CullTransparentMesh: 1
+--- !u!1 &762337888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
+  m_PrefabInstance: {fileID: 1654205943}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &762337890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 762337888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8c61cb9115d0014f8cacb26db8d6e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1441197576}
+  propeller: {fileID: 61656618}
+  propellerBack: {fileID: 952069471}
+  startPos: {fileID: 224453301}
+  destinationCPR: {fileID: 339290150}
+  rotateSpeed: 300
+  canMove: 0
 --- !u!1001 &762353821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38522,6 +38552,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3605897711388851022, guid: 37f9aeb2fdaf19f4a8efd7ce8a593dcd, type: 3}
   m_PrefabInstance: {fileID: 950592494}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &952069471 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
+  m_PrefabInstance: {fileID: 1654205943}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &952193511
 PrefabInstance:
@@ -57648,6 +57683,7 @@ MonoBehaviour:
   startSceneCam: {fileID: 1637906990}
   playerCam: {fileID: 1794180683}
   player: {fileID: 277845551}
+  hellicopter: {fileID: 762337888}
   cprSituation: {fileID: 397307121}
   fractureSituation: {fileID: 865865990}
   mode: 0
@@ -65985,6 +66021,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hellicopter
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.9
@@ -66040,7 +66080,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100002, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 762337890}
   m_SourcePrefab: {fileID: 100100000, guid: f81aafb8004015d4b8c0add1556aee0a, type: 3}
 --- !u!1001 &1654340500
 PrefabInstance:

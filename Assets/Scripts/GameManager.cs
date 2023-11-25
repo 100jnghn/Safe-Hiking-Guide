@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject player; // 플레이어 객체
     private Player playerScript; // 플레이어 스크립트
 
+    public GameObject hellicopter; // 헬리콥터 오브젝트
+
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
 
@@ -47,7 +49,6 @@ public class GameManager : MonoBehaviour
     // 상황 시작
     public void startSituation()
     {
-        mode = Mode.CPR; // 현재 모드를 CPR 모드로
 
         startSceneUIPanel.SetActive(false); // 시작 화면 UI 끄기
         startSceneCam.SetActive(false); // 시작 화면 카메라 끄기
@@ -60,16 +61,29 @@ public class GameManager : MonoBehaviour
     // 상황 끝
     public void finishSituation()
     {
+        moveHellicopter(); // 엔딩 : 헬기 이동
+
         // 모드 초기화
         // 각 상황들 변수 초기화
         // 각 상황들 오브젝트 위치 초기화
-        // 헬리콥터 위치 초기화
+        // 헬리콥터 위치 초기화 + SetActive(false)
         // UI 세팅
+        // 카메라 세팅
+    }
+
+    // 헬리콥터 이동시키는 함수
+    public void moveHellicopter()
+    {
+        hellicopter.SetActive(true); // 헬리콥터 활성화
+        // 현재 모드에 따라 해당 위치로 헬기 이동
+        
     }
 
     // 시작 메뉴 화면에서 심폐소생술 상황 클릭
     public void startCPR()
     {
+        mode = Mode.CPR; // 현재 모드를 CPR 모드로
+
         player.transform.position = cprSituation.transform.position; // 시작 위치 설정
         startSituation();
         cpr.StartCoroutine("startSituation"); // CPR 상황 시작
@@ -250,6 +264,21 @@ public class GameManager : MonoBehaviour
 
             uiStr = "30회 가슴압박, 2회 인공호흡을 119가 도착할 때까지 반복 시행해 주세요";
             setText(situationMainText, uiStr);
+
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                cpr.finishCPR = true; // CPR 상황 끝
+            }));
+        }
+
+        // CPR 상황 끝!
+        if (cpr.finishCPR)
+        {
+            uiStr = "119 구조대가 도착합니다.";
+            setText(situationMainText, uiStr);
+
+            finishSituation();
         }
 
     }

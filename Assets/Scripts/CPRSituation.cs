@@ -19,6 +19,7 @@ public class CPRSituation : MonoBehaviour
     public bool didChestPress; // 가슴 압박 수행했는지?
     public bool isArtificialRes; // 인공호흡 해야 하는 순서?
     public bool didArtificialRes; // 인공호흡 수행했는지?
+    public bool finishCPR; // CPR 상황 종료
 
     private Animator patientAnimator; //환자 Animator 컴포넌트
     public CapsuleCollider capsuleCollider; // 캡슐 콜라이더 컴포넌트
