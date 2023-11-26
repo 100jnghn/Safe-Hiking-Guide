@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public Camera mainCamera;
     private Ray ray;
     private RaycastHit hit; // Raycast 충돌 감지
+    GameObject gazeTimerObject; // 물체를 가리키고 있는지 확인하는 변수
+    float gazeTimer = 0f; // 가리키고 있는 시간을 측정하는 변수
 
     public GameObject camera; // 플레이어 시점의 카메라
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
         shotRay(); // 레이를 쏘아주는 함수
         rayCollider();
         doSit(); // 플레이어가 앉는 기능 (C키 입력)
+        doPress();
     }
 
     // 플레이어 이동 함수
@@ -156,6 +159,50 @@ public class Player : MonoBehaviour
         }
         return action;
     }
+
+    // P 키를 눌러 지혈 (3초 이상 누르면 true)
+    public bool doPress()
+    {
+        bool action = false;
+        if (Input.GetKey(KeyCode.P))
+        {
+            inputTimer += Time.deltaTime;
+            if (inputTimer > 3f)
+            {
+                action = true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.P)) // P 키에서 떼면 inputTimer 초기화
+        {
+            action = false;
+            inputTimer = 0f;
+        }
+        return action;
+    }
+
+
+    //냉찜질하기
+    public bool doIcing()
+    {
+        bool action = false;
+        if (Input.GetKey(KeyCode.I))
+        {
+            inputTimer += Time.deltaTime;
+            if (inputTimer > 3f)
+            {
+                action = true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.I)) // I 키에서 떼면 inputTimer 초기화
+        {
+            action = false;
+            inputTimer = 0f;
+        }
+        return action;
+    }
+
+
+
 
     private void OnCollisionEnter(Collision collision)
     {

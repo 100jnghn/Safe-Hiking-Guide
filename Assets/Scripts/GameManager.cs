@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject chestPressHintImg; // 가슴 압박 힌트 이미지
     public GameObject artificialResHintImg; // 인공호흡 힌트 이미지
+    public GameObject pressHintImg; // 지혈 힌트 이미지
+    public GameObject splintHintImg;// 부목 대기 힌트 이미지
 
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
@@ -298,7 +300,7 @@ public class GameManager : MonoBehaviour
         //골절이 의심된 경우에는 항상 골절로 간주하고 처치. 함부로 눌러보거나 꺾어 보지 않는다.
         if (fracture.isPatientCons && !fracture.didCall119)
         {
-            uiStr = "골절이 의심됩니다.\n함부로 눌러보거나 꺾어보지 마세요.\n주변 사람에게 119에 신고해 달라고 해주세요.";
+            uiStr = "골절이 의심됩니다.\n함부로 눌러보거나 꺾어보지 마세요.\n주변 사람에게 119에 신고해 달라고 해주세요.(R키를 눌러 시행합니다.)";
             setText(situationMainText, uiStr);
         }
 
@@ -309,8 +311,115 @@ public class GameManager : MonoBehaviour
             situationMainText.color = Color.yellow;
             setText(situationMainText, uiStr);
             fracture.didCall119 = true;
+
+            // 2초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(2f, () =>
+            {
+                fracture.isTakeOff = true; // 옷 제거해야함
+            }));
         }
 
+        //손상 부위를 확인하기 위해 환부의 옷 제거
+        if (fracture.didCall119&&fracture.isTakeOff && !fracture.isPress &&!fracture.didTakeOff)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "환자의 상태를 자세히 확인하기위해 \"R키\"을 3초동안 눌러 환자의 옷을 제거해주세요";
+            setText(situationMainText, uiStr);
+        }
+
+        //환자 옷 제거 수행 완료
+        if (fracture.didCall119&&fracture.isTakeOff && !fracture.isPress&& playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+            uiStr = "(옷을 제거했습니다.)";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.yellow;
+            StartCoroutine(DelayedAction(2f, () =>
+            {
+                fracture.didTakeOff = true;
+                fracture.isPress = true;
+                Debug.Log("값: " + fracture.didTakeOff);
+            }));
+            
+        }
+
+
+        //출혈 시 지혈
+        if (fracture.didTakeOff&& fracture.isPress && !fracture.didPress && !fracture.isSplint)
+        {
+            pressHintImg.SetActive(true);
+            situationMainText.color = Color.white;
+            uiStr = "다리에 출혈이 있습니다.\n 지혈을 하기위해 \"P키\"를 3초동안 눌러주세요";
+            setText(situationMainText, uiStr);
+        }
+        //지혈 수행 완료
+        if (fracture.didTakeOff && fracture.isPress&&playerScript.rayCollObject.tag == "Patient" && playerScript.doPress())
+        {
+            uiStr = "(지혈했습니다.)";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.yellow;
+            StartCoroutine(DelayedAction(2f, () =>
+            {
+                fracture.didPress = true;
+                fracture.isSplint = true;
+            }));            
+        }
+
+
+        // 지혈 수행 완료 & 부목대기
+        if (fracture.didPress&& fracture.isSplint && !fracture.didSplint && !fracture.isIcing)
+        {
+            pressHintImg.SetActive(false);// 지혈이미지 안 보이게
+            splintHintImg.SetActive(true);// 부목이미지로 대체
+            uiStr = "이미지UI를 참고하여 R키를 통해 부목을 대고, 다리가 움직이지 않게 고정해주세요.";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.white;
+
+        }
+
+        //부목대기 수행 완료
+        if (fracture.didPress && fracture.isSplint &&playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+            splintHintImg.SetActive(false);// 부목이미지 안 보이게
+            uiStr = "(부목을 대었습니다.)";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.yellow;
+            StartCoroutine(DelayedAction(2f, () =>
+            {
+                fracture.didSplint = true;
+                fracture.isIcing = true;
+            }));
+        }
+
+        //냉찜질 수행
+        if (fracture.didSplint && fracture.isIcing && !fracture.didIcing && !fracture.finishFracture)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "붓기와 통증을 줄이기위해 냉찜질이 필요합니다.\n \"I버튼\"을 3초동안 눌러주세요";
+            setText(situationMainText, uiStr);
+        }
+
+
+        //냉찜질 수행 완료
+        if (fracture.didSplint && fracture.isIcing && playerScript.rayCollObject.tag == "Patient" && playerScript.doIcing())
+        {
+            uiStr = "냉찜질을 했습니다.)";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.yellow;
+            StartCoroutine(DelayedAction(2f, () =>
+            {
+            fracture.didIcing = true;
+            fracture.finishFracture = true;
+            }));
+        }
+
+        // Fracture 상황 끝
+        if (fracture.finishFracture)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "119 구조대가 도착합니다.";
+            setText(situationMainText, uiStr);
+            finishSituation();
+        }
 
     }
 

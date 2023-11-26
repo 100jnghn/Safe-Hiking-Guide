@@ -13,6 +13,16 @@ public class FractureSituation : MonoBehaviour
     public bool isPatientCons;  // 환자 의식을 파악해야 하나요?
     public bool isHelpOther;    // 다른 사람에게 도움을 요청해야 하는 상황?
     public bool didCall119; // 다른 사람에게 119 불러달라고 요청했는지?
+    public bool isTakeOff; //손상 부위를 확인하기 위해 환부의 옷 제거
+    public bool didTakeOff; //환부의 옷 제거수행완료
+    public bool isPress; // 지혈 수행해야하는 상황
+    public bool didPress; // 지혈 수행완료
+    public bool isSplint; // 부목 수행해야하는 상황
+    public bool didPickUp; // 부목 줍기
+    public bool didSplint; //부목 수행완료
+    public bool isIcing; //냉찜질 수행해야하는 상황
+    public bool didIcing; //냉찜질 수행완료
+
 
 
     public bool finishFracture; // Fracture 상황 종료
@@ -111,60 +121,6 @@ public class FractureSituation : MonoBehaviour
     //Fracture UI
     public void setUIFracture()
     {
-        // 환자가 쓰러졌다면
-        if (fracture.isPatientDown && !fracture.isPatientCons)
-        {
-            situationMainTextPanel.SetActive(true);
-            uiStr = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
-            setText(situationMainText, uiStr);
-        }
-
-        //골절이 의심된 경우에는 항상 골절로 간주하고 처치. 함부로 눌러보거나 꺾어 보지 않는다.
-        if (fracture.isPatientCons && !fracture.didCall119)
-        {
-            uiStr = "골절이 의심됩니다.\n함부로 눌러보거나 꺾어보지 마세요.\n주변 사람에게 119에 신고해 달라고 해주세요.";
-            setText(situationMainText, uiStr);
-        }
-
-        // 119 신고 요청
-        if (fracture.isHelpOther && !fracture.didCall119 && !cpr.didCallAED && playerScript.rayCollObject.name == "For Fracture 119" && playerScript.doAction())
-        {
-            uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
-            situationMainText.color = Color.yellow;
-            setText(situationMainText, uiStr);
-            cpr.didCall119 = true;
-        }
-
-            //골절이 의심된 경우에는 항상 골절로 간주하고 처치. 함부로 눌러보거나 꺾어 보지 않는다.
-        if (fracture.isPatientCons && !fracture.didCall119)
-        {
-            uiStr = "골절이 의심됩니다.\n 함부로 눌러보거나 꺾어보지 마세요.\n주변 사람에게 119에 신고해 달라고 해주세요.(R키를 눌러 시행합니다.)";
-            setText(situationMainText, uiStr);
-        }
-
-
-
-        //환자 다리 골절 확인
-        if (fracture.isPatientCons && !fracture.didCall119)
-        {
-            uiStr = "환자가 다리를 움직이지 못합니다.\n 자세히 확인하기위해 \"C버튼\"을 눌러서 앉아주세요";
-            setText(situationMainText, uiStr);
-        }
-
-        //손상 부위를 확인하기 위해 환부의 옷 제거
-        if (fracture.isPatientCons && !cpr.didPatientCons && !fracture.isHelpOther && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
-        {
-            uiStr = "환자의 옷을 제거하기위해 \"R버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
-        }
-
-        //출혈 시 지혈
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "다리에 출혈이 있습니다.\n 지혈을 하기위해 \"P버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
-        }
-
 
         //부목 고정
         if (fracture.isPatientCons && !fracture.isHelpOther)
