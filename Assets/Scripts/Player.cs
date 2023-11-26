@@ -124,8 +124,8 @@ public class Player : MonoBehaviour
 
     void shotRay()
     {
-        Debug.DrawLine(ray.origin, hit.point, Color.red);
         ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Debug.DrawLine(ray.origin, hit.point, Color.red);
     }
 
     // ray의 충돌을 처리하는 함수
@@ -165,6 +165,10 @@ public class Player : MonoBehaviour
             if (cpr.isPatientDown & !cpr.isPatientCons) // 환자가 쓰러진 상태
             {
                 cpr.isPatientCons = true; // 환자의 의식을 확인해야 하는 상태 On
+            }
+            if (fracture.isPatientDown & !fracture.isPatientCons) // 환자가 쓰러진 상태
+            {
+                fracture.isPatientCons = true; // 구조요청을 해야하는 상태 On
             }
         }
     }

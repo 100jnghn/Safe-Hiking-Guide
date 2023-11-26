@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         setUICPR(); // CPR 상황에서의 UI를 관리
+        setUIFracture(); // Fracture 상황에서의 UI를 관리
     }
 
     // 상황 시작
@@ -283,8 +284,6 @@ public class GameManager : MonoBehaviour
 
     }
 
-
-    /*
     //Fracture UI
     public void setUIFracture()
     {
@@ -296,63 +295,30 @@ public class GameManager : MonoBehaviour
             setText(situationMainText, uiStr);
         }
 
-
         //골절이 의심된 경우에는 항상 골절로 간주하고 처치. 함부로 눌러보거나 꺾어 보지 않는다.
-        if (fracture.isPatientCons && !fracture.isHelpOther)
+        if (fracture.isPatientCons && !fracture.didCall119)
         {
-            uiStr = "골절이 의심됩니다.\n 함부로 눌러보거나 꺾어보지 마세요.";
+            uiStr = "골절이 의심됩니다.\n함부로 눌러보거나 꺾어보지 마세요.\n주변 사람에게 119에 신고해 달라고 해주세요.";
             setText(situationMainText, uiStr);
         }
 
-        //환자 다리 골절 확인
-        if (fracture.isPatientCons && !fracture.isHelpOther)
+        // 119 신고 요청
+        if (!fracture.didCall119 && playerScript.rayCollObject != null && playerScript.rayCollObject.name == "For Fracture 119" && playerScript.doAction())
         {
-            uiStr = "환자가 다리를 움직이지 못합니다.\n 자세히 확인하기위해 \"C버튼\"을 눌러서 앉아주세요";
+            uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
+            situationMainText.color = Color.yellow;
             setText(situationMainText, uiStr);
-        }
-
-        //손상 부위를 확인하기 위해 환부의 옷 제거
-        if (fracture.isPatientCons && !cpr.didPatientCons && !fracture.isHelpOther && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
-        {
-            uiStr = "환자의 옷을 제거하기위해 \"R버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
-        }
-
-        //출혈 시 지혈
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "다리에 출혈이 있습니다.\n 지혈을 하기위해 \"P버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
+            fracture.didCall119 = true;
         }
 
 
-        //부목 고정
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "우측에서 부목을 주워와 다리를 움직이지 않게 고정해주세요.\n 부목에 가까이 다가가면 습득할 수 있습니다.\n 부목을 대는 방법은 이미지UI를 참고해주세요.";
-            setText(situationMainText, uiStr);
-        }
-
-        //냉찜질
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "붓기와 통증을 줄이기위해 냉찜질이 필요합니다.\n \"I버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
-        }
-    
     }
-    */
 
 
 
 
-
-
-
-
-
-    // delay만큼 대기하는 코루틴
-    private IEnumerator DelayedAction(float delay, System.Action action)
+        // delay만큼 대기하는 코루틴
+        private IEnumerator DelayedAction(float delay, System.Action action)
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();
