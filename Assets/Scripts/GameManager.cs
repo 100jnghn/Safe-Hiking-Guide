@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour
         playerScript = player.GetComponent<Player>();
 
         mode = Mode.Nothing; // 시작은 아무런 모드가 아닌 상태
+        splintHintImg.SetActive(false);
+        pressHintImg.SetActive(false);
+
     }
 
     void Update()
