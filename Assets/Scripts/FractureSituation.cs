@@ -29,7 +29,9 @@ public class FractureSituation : MonoBehaviour
 
     private Animator patientAnimator; //환자 Animator 컴포넌트
     public CapsuleCollider capsuleCollider; // 캡슐 콜라이더 컴포넌트
-
+    private Vector3 patientFallPosition;// 환자 쓰러진 위치
+    private Quaternion patientFallRotation; //환자 쓰러진 방향
+    public bool isFixed = false;//환자 고정
 
     private float time = 0f;
 
@@ -42,7 +44,10 @@ public class FractureSituation : MonoBehaviour
 
     void Update()
     {
-
+        if (isFixed)
+        {
+            FixPatientPosition(); // 환자가 고정되어 있을 때 위치 및 회전 고정
+        }
     }
 
     public IEnumerator startSituation()
@@ -50,7 +55,7 @@ public class FractureSituation : MonoBehaviour
         patient.SetActive(true);
         Debug.Log("Fracture Situation Start");
 
-        yield return new WaitForSeconds(1f); // 1초 대기 후 시작
+        yield return new WaitForSeconds(2f); // 2초 대기 후 시작
 
 
         //환자 걷는 애니메이션
@@ -72,7 +77,12 @@ public class FractureSituation : MonoBehaviour
 
         //환자 쓰러지는 애니메이션
         patientFalling();
+        yield return new WaitForSeconds(0.5f);
+        patientFallPosition = patient.transform.position;
+        patientFallRotation = patient.transform.rotation;
 
+
+        isFixed = true;
 
         yield return null;
         yield break;
@@ -111,30 +121,9 @@ public class FractureSituation : MonoBehaviour
     {
         patient.transform.Translate(Vector3.forward * patientMoveSpeed * Time.deltaTime); // 환자 앞으로 이동
     }
-}
-
-
-
-
-
-/*
-    //Fracture UI
-    public void setUIFracture()
+    private void FixPatientPosition()
     {
-
-        //부목 고정
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "우측에서 부목을 주워와 다리를 움직이지 않게 고정해주세요.\n 부목에 가까이 다가가면 습득할 수 있습니다.\n 부목을 대는 방법은 이미지UI를 참고해주세요.";
-            setText(situationMainText, uiStr);
-        }
-
-        //냉찜질
-        if (fracture.isPatientCons && !fracture.isHelpOther)
-        {
-            uiStr = "붓기와 통증을 줄이기위해 냉찜질이 필요합니다.\n \"I버튼\"을 3초동안 눌러주세요";
-            setText(situationMainText, uiStr);
-        }
-    
+        patient.transform.position = patientFallPosition; // 쓰러진 위치로 환자 이동
+        patient.transform.rotation = patientFallRotation; // 쓰러진 때의 회전 값으로 환자 회전
     }
-    */
+}
