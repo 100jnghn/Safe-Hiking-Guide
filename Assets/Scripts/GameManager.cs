@@ -289,6 +289,14 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+
+
+
+
+
+
     //Fracture UI
     public void setUIFracture()
     {
@@ -333,21 +341,29 @@ public class GameManager : MonoBehaviour
         //환자 옷 제거 수행 완료
         if (fracture.didCall119&&fracture.isTakeOff && !fracture.isPress&& playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
         {
-            uiStr = "(옷을 제거했습니다.)";
-            setText(situationMainText, uiStr);
-            situationMainText.color = Color.yellow;
-            StartCoroutine(DelayedAction(2f, () =>
-            {
                 fracture.didTakeOff = true;
-                fracture.isPress = true;
+                
                 Debug.Log("값: " + fracture.didTakeOff);
-            }));
             
         }
 
 
+        if (!fracture.isPress && fracture.didTakeOff)
+        {
+            uiStr = "(옷을 제거했습니다.)";
+            setText(situationMainText, uiStr);
+            situationMainText.color = Color.yellow;
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                fracture.isPress = true;
+            }));
+        }
+
+        /////
+
         //출혈 시 지혈
-        if (fracture.didTakeOff&& fracture.isPress && !fracture.didPress && !fracture.isSplint)
+        if (fracture.isPress && !fracture.didPress)
         {
             pressHintImg.SetActive(true);
             situationMainText.color = Color.white;
@@ -360,7 +376,7 @@ public class GameManager : MonoBehaviour
             uiStr = "(지혈했습니다.)";
             setText(situationMainText, uiStr);
             situationMainText.color = Color.yellow;
-            StartCoroutine(DelayedAction(2f, () =>
+            StartCoroutine(DelayedAction(3f, () =>
             {
                 fracture.didPress = true;
                 fracture.isSplint = true;
@@ -405,10 +421,10 @@ public class GameManager : MonoBehaviour
         //냉찜질 수행 완료
         if (fracture.didSplint && fracture.isIcing && playerScript.rayCollObject.tag == "Patient" && playerScript.doIcing())
         {
-            uiStr = "냉찜질을 했습니다.)";
+            uiStr = "(냉찜질을 했습니다.)";
             setText(situationMainText, uiStr);
             situationMainText.color = Color.yellow;
-            StartCoroutine(DelayedAction(2f, () =>
+            StartCoroutine(DelayedAction(3f, () =>
             {
             fracture.didIcing = true;
             fracture.finishFracture = true;
