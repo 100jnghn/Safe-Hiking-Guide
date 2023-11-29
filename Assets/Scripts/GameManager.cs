@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     private Player playerScript; // 플레이어 스크립트
 
     public GameObject hellicopter; // 헬리콥터 오브젝트
+    private Hellicopter hellicopterScript; // 헬리콥터 스크립트
 
     public GameObject cprSituation; // CPR 상황을 관리 (Start Position CPR)
     private CPRSituation cpr; // cprSituation 오브젝트의 Component인 CPRSituation 스크립트를 가져옴
@@ -34,11 +35,14 @@ public class GameManager : MonoBehaviour
     public enum Mode { Nothing, CPR, Fracture, Snake, Bee };
     public Mode mode; // 현재 어떤 모드인지 저장
 
+    private bool activeExitBtn; // esc 버튼을 눌러 메인 화면으로 갈 수 있는지 판단하는 변수
+
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
         fracture = fractureSituation.GetComponent<FractureSituation>();
         playerScript = player.GetComponent<Player>();
+        hellicopterScript = hellicopter.GetComponent<Hellicopter>();
 
         mode = Mode.Nothing; // 시작은 아무런 모드가 아닌 상태
         splintHintImg.SetActive(false);
@@ -50,12 +54,13 @@ public class GameManager : MonoBehaviour
     {
         setUICPR(); // CPR 상황에서의 UI를 관리
         setUIFracture(); // Fracture 상황에서의 UI를 관리
+
+        if (activeExitBtn && Input.GetKeyDown(KeyCode.Escape)) { finishSituation(); }
     }
 
     // 상황 시작
     public void startSituation()
     {
-
         startSceneUIPanel.SetActive(false); // 시작 화면 UI 끄기
         startSceneCam.SetActive(false); // 시작 화면 카메라 끄기
         player.SetActive(true); // 플레이어 활성화
@@ -67,15 +72,27 @@ public class GameManager : MonoBehaviour
     // 상황 끝
     public void finishSituation()
     {
-        moveHellicopter(); // 엔딩 : 헬기 이동
-
         // 모드 초기화
+        mode = Mode.Nothing;
+
         // 각 상황들 변수 초기화
         // 각 상황들 오브젝트 위치 초기화
+        cpr.Reset();
+        fracture.Reset();
+
+
         // 헬리콥터 위치 초기화 + SetActive(false)
+        hellicopterScript.Reset();
+
         // UI 세팅
+        situationUIPanel.SetActive(false); // 상황들의 UI
+        situationMainTextPanel.SetActive(false); // 자막 패널
+        startSceneUIPanel.SetActive(true); // 시작 화면 UI
+
         // 카메라 세팅
-    }
+        playerCam.SetActive(false); // 플레이어 시점의 카메라
+        startSceneCam.SetActive(true); // 시작 화면 카메라
+}
 
     // 헬리콥터 이동시키는 함수
     public void moveHellicopter()
@@ -134,7 +151,7 @@ public class GameManager : MonoBehaviour
         // 환자의 의식을 파악해야 하는 상황
         if (cpr.isPatientCons && !cpr.isHelpOther) 
         {
-            uiStr = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식과 호흡 여부를 파악해 주세요.";
+            uiStr = "어깨를 두드리며, \"괜찮으세요?\"라고 물어보고\n의식과 호흡 여부를 파악해 주세요.\n(R키를 눌러 액션)";
             setText(situationMainText, uiStr);
         }
 
@@ -166,7 +183,7 @@ public class GameManager : MonoBehaviour
         // 다른 사람에게 도움을 요청해야 하는 상황
         if (cpr.isHelpOther && !cpr.didCall119 && !cpr.didCallAED)
         {
-            uiStr = "환자가 의식이 없습니다.\n주변 사람들에게 도움을 요청하고 CPR을 수행하세요.";
+            uiStr = "환자가 의식이 없습니다.\n주변 사람들에게 도움을 요청하고 CPR을 수행하세요.\n(R키를 눌러 액션)";
             situationMainText.color = Color.white;
             setText(situationMainText, uiStr);
         }
@@ -210,7 +227,7 @@ public class GameManager : MonoBehaviour
         // 가슴 압박 수행해야 하는 순서
         if (cpr.isChestPress && !cpr.didChestPress)
         {
-            uiStr = "이미지를 참고하여 정확한 자세로 가슴 압박을 수행하세요.";
+            uiStr = "이미지를 참고하여 정확한 자세로 가슴 압박을 수행하세요.\n(R키를 눌러 액션)";
             situationMainText.color = Color.white;
             setText(situationMainText, uiStr);
 
@@ -246,7 +263,7 @@ public class GameManager : MonoBehaviour
         // 인공호흡을 수행해야 하는 순서
         if (cpr.isArtificialRes && !cpr.didArtificialRes)
         {
-            uiStr = "환자의 머리를 젖혀 기도를 확보하고\n 이미지를 참고하여 정확한 자세로 인공호흡을 수행하세요";
+            uiStr = "환자의 머리를 젖혀 기도를 확보하고\n 이미지를 참고하여 정확한 자세로 인공호흡을 수행하세요\n(R키를 눌러 액션)";
             setText(situationMainText, uiStr);
 
             // ----- 이미지를 띄우는 코드 작성 ----- //
@@ -284,7 +301,8 @@ public class GameManager : MonoBehaviour
             uiStr = "119 구조대가 도착합니다.";
             setText(situationMainText, uiStr);
 
-            finishSituation();
+            moveHellicopter();
+            activeExitBtn = true; // esc 버튼 활성화
         }
 
     }
@@ -449,14 +467,16 @@ public class GameManager : MonoBehaviour
             situationMainText.color = Color.white;
             uiStr = "119 구조대가 도착합니다.";
             setText(situationMainText, uiStr);
-            finishSituation();
+
+            moveHellicopter();
+            activeExitBtn = true; // esc 버튼 활성화
         }
 
     }
 
 
-        // delay만큼 대기하는 코루틴
-        private IEnumerator DelayedAction(float delay, System.Action action)
+    // delay만큼 대기하는 코루틴
+    private IEnumerator DelayedAction(float delay, System.Action action)
     {
         yield return new WaitForSeconds(delay);
         action?.Invoke();

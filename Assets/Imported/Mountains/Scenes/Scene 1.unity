@@ -3921,6 +3921,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2283974389285834601, guid: 83145382902cecc4286a4f62b720fb37, type: 3}
   m_PrefabInstance: {fileID: 73140922}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &74055159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 74055160}
+  m_Layer: 0
+  m_Name: Hellicopter Destination Fracture
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &74055160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74055159}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.19074991, z: -0, w: 0.98163867}
+  m_LocalPosition: {x: -10, y: 160, z: 15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 385124085}
+  m_LocalEulerAnglesHint: {x: 0, y: -21.993, z: 0}
 --- !u!1001 &74572590
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6162,7 +6193,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &126527351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13210,7 +13241,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1796866196}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2369712856581739831, guid: 730000931cae1454c8083362445e8f75, type: 3}
       propertyPath: m_Enabled
@@ -17419,6 +17450,7 @@ Transform:
   m_Children:
   - {fileID: 224453301}
   - {fileID: 339290150}
+  - {fileID: 74055160}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &388644311
@@ -17958,6 +17990,8 @@ MonoBehaviour:
   patientMoveSpeed: 1
   player: {fileID: 277845551}
   patient: {fileID: 37781886}
+  playerStartPos: {fileID: 397307122}
+  patientStartPos: {fileID: 37781890}
   isPatientDown: 0
   isPatientCons: 0
   didPatientCons: 0
@@ -31945,10 +31979,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 1441197576}
+  hellicopter: {fileID: 762337888}
   propeller: {fileID: 61656618}
   propellerBack: {fileID: 952069471}
   startPos: {fileID: 224453301}
   destinationCPR: {fileID: 339290150}
+  destinationFracture: {fileID: 74055160}
   sound: {fileID: 762337891}
   rotateSpeed: 300
 --- !u!82 &762337891
@@ -33949,7 +33985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &814227308
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33962,6 +33998,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 970327778}
   - {fileID: 1369793321}
   - {fileID: 1036861364}
   - {fileID: 337252992}
@@ -35242,6 +35279,8 @@ MonoBehaviour:
   patientMoveSpeed: 1
   player: {fileID: 277845551}
   patient: {fileID: 2026220952}
+  playerStartPos: {fileID: 865865991}
+  patientStartPos: {fileID: 2026220956}
   isPatientDown: 0
   isPatientCons: 0
   isHelpOther: 0
@@ -35257,6 +35296,7 @@ MonoBehaviour:
   didIcing: 0
   finishFracture: 0
   capsuleCollider: {fileID: 0}
+  isFixed: 0
 --- !u!1001 &867405456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38894,7 +38934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &957340094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39372,6 +39412,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3529263316264705873, guid: e282280263592284b8c7c955e3517805, type: 3}
   m_PrefabInstance: {fileID: 967176317}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &970327777
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 970327778}
+  - component: {fileID: 970327780}
+  - component: {fileID: 970327779}
+  m_Layer: 5
+  m_Name: Center Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &970327778
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970327777}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 814227308}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &970327779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970327777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.6313726}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &970327780
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970327777}
+  m_CullTransparentMesh: 1
 --- !u!1001 &970761446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39537,7 +39652,7 @@ Transform:
   m_GameObject: {fileID: 971934888}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72284,8 +72399,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 277845552}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1796951267
@@ -73429,7 +73543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1838625277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85272,6 +85386,7 @@ SceneRoots:
   - {fileID: 1441197577}
   - {fileID: 1342716020}
   - {fileID: 1796866196}
+  - {fileID: 277845550}
   - {fileID: 1472223504}
   - {fileID: 126259417}
   - {fileID: 1596492703}

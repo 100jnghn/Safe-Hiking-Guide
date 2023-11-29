@@ -9,6 +9,9 @@ public class FractureSituation : MonoBehaviour
     public GameObject player; // 플레이어
     public GameObject patient; // 환자
 
+    public Transform playerStartPos; // 플레이어 시작 위치
+    public Transform patientStartPos; // 환자 시작 위치
+
     public bool isPatientDown;  // 환자가 쓰러진 상황인가요?
     public bool isPatientCons;  // 환자 의식을 파악해야 하나요?
     public bool isHelpOther;    // 다른 사람에게 도움을 요청해야 하는 상황?
@@ -22,9 +25,6 @@ public class FractureSituation : MonoBehaviour
     public bool didSplint; //부목 수행완료
     public bool isIcing; //냉찜질 수행해야하는 상황
     public bool didIcing; //냉찜질 수행완료
-
-
-
     public bool finishFracture; // Fracture 상황 종료
 
     private Animator patientAnimator; //환자 Animator 컴포넌트
@@ -125,5 +125,25 @@ public class FractureSituation : MonoBehaviour
     {
         patient.transform.position = patientFallPosition; // 쓰러진 위치로 환자 이동
         patient.transform.rotation = patientFallRotation; // 쓰러진 때의 회전 값으로 환자 회전
+    }
+
+    public void Reset()
+    {
+        isPatientDown = false;  // 환자가 쓰러진 상황인가요?
+        isPatientCons = false;  // 환자 의식을 파악해야 하나요?
+        isHelpOther = false;    // 다른 사람에게 도움을 요청해야 하는 상황?
+        didCall119 = false; // 다른 사람에게 119 불러달라고 요청했는지?
+        isTakeOff = false; //손상 부위를 확인하기 위해 환부의 옷 제거
+        didTakeOff = false; //환부의 옷 제거수행완료
+        isPress = false; // 지혈 수행해야하는 상황
+        didPress = false; // 지혈 수행완료
+        isSplint = false; // 부목 수행해야하는 상황
+        didPickUp = false; // 부목 줍기
+        didSplint = false; //부목 수행완료
+        isIcing = false; //냉찜질 수행해야하는 상황
+        didIcing = false; //냉찜질 수행완료
+
+        patient.transform.position = patientStartPos.position;
+        patient.SetActive(false);
     }
 }

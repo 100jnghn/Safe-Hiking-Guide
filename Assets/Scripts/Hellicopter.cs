@@ -7,11 +7,13 @@ public class Hellicopter : MonoBehaviour
 {
     public GameManager gameManager;
 
+    public GameObject hellicopter; // Çï¸®ÄßÅÍ º»Ã¼
     public GameObject propeller; // Çï¸®ÄßÅÍÀÇ ÇÁ·ÎÆç·¯
     public GameObject propellerBack; // Çï¸®ÄßÅÍ µÚÂÊ ÇÁ·ÎÆç·¯
 
     public Transform startPos; // Çï¸®ÄßÅÍ ½ÃÀÛ À§Ä¡
     public Transform destinationCPR; // CPR »óÈ² µµÂø À§Ä¡
+    public Transform destinationFracture; // °ñÀý »óÈ² µµÂø À§Ä¡
 
     public AudioSource sound; // Çï¸®ÄßÅÍ ¼Ò¸®
 
@@ -54,7 +56,17 @@ public class Hellicopter : MonoBehaviour
             case GameManager.Mode.CPR:
                 transform.position = Vector3.Lerp(transform.position, destinationCPR.position, 0.003f);
                 break;
+
+            case GameManager.Mode.Fracture:
+                transform.position = Vector3.Lerp(transform.position, destinationFracture.position, 0.003f);
+                break;
         }
-        
+
+    }
+
+    public void Reset()
+    {
+        this.transform.position = startPos.position;
+        hellicopter.SetActive(false);
     }
 }
