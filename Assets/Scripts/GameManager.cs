@@ -33,6 +33,9 @@ public class GameManager : MonoBehaviour
     public GameObject beeSituation; // Bee 상황을 관리
     private BeeSituation bee; // beeSituation 스크립트
 
+    public GameObject snakeSituation; // Snake 상황을 관리
+    private BeeSituation snake; // snakeSituation 스크립트
+
     private string uiStr; // 자막에 들어갈 내용
 
     public enum Mode { Nothing, CPR, Fracture, Snake, Bee };
@@ -125,6 +128,12 @@ public class GameManager : MonoBehaviour
     // 시작 메뉴 화면에서 뱀에 물리는 상황 클릭
     public void startSnake()
     {
+        mode = Mode.Snake; // (추가됨 :) 현재 모드를 뱀물림 모드로
+
+        player.transform.position = snakeSituation.transform.position;// 시작 위치 설정
+        startSituation();
+        snake.StartCoroutine("startSituation");
+
         startSituation();
 
     }
