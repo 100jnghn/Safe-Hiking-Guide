@@ -6,13 +6,13 @@ public class BeeSituation : MonoBehaviour
 {
     public Transform playerStartPos; // 플레이어 시작 위치
     public Transform beeStartPos; // 벌 시작 위치
-    public Transform beeTarget; // 벌이 쏠 위치
+    public Transform beeTarget; // 벌이 날아갈 위치
 
     public GameObject player; // 플레이어
     public GameObject beePlayerCam; // 플레이어 시점 카메라
     public GameObject bee; // 벌 프리팹 객체 (instantiate 해서 생성)
 
-    public Animator beeAnimator; // 벌 애니메이터
+    private Animator beeAnimator; // 벌 애니메이터
     
     void Start()
     {
@@ -27,13 +27,14 @@ public class BeeSituation : MonoBehaviour
     // 벌이 쏠 위치로 이동
     private void beeMoveToTarget()
     {
-        bee.transform.position = Vector3.Lerp(transform.position, beeTarget.position, 0.003f);
+        bee.transform.position = Vector3.Lerp(bee.transform.position, beeTarget.position, 0.003f);
     }
 
     // 벌이 플레이어 공격
     private void beeAttack()
     {
         //beeAnimator.SetTrigger("");
+        Debug.Log("Bee Attack");
     }
 
     // 시작 위치로 이동
@@ -46,6 +47,7 @@ public class BeeSituation : MonoBehaviour
     public IEnumerator startSituation()
     {
         setPosition();
+        beeAnimator = bee.GetComponent<Animator>();
 
         // 시점 변환
         beePlayerCam.SetActive(true);

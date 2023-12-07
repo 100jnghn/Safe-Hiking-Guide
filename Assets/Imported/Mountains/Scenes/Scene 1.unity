@@ -17220,8 +17220,7 @@ MonoBehaviour:
   beeTarget: {fileID: 831019226}
   player: {fileID: 722690278}
   beePlayerCam: {fileID: 932780245}
-  bee: {fileID: 0}
-  beeAnimator: {fileID: 0}
+  bee: {fileID: 1046869630431942, guid: c717f817a496cf247a92b830b355a407, type: 3}
 --- !u!1001 &381317672
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57817,7 +57816,7 @@ MonoBehaviour:
   hellicopter: {fileID: 762337888}
   cprSituation: {fileID: 397307121}
   fractureSituation: {fileID: 865865990}
-  beeSituation: {fileID: 0}
+  beeSituation: {fileID: 379826748}
   mode: 0
 --- !u!4 &1441197577
 Transform:
