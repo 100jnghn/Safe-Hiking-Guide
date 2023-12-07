@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     private BeeSituation bee; // beeSituation 스크립트
 
     public GameObject snakeSituation; // Snake 상황을 관리
-    private BeeSituation snake; // snakeSituation 스크립트
+    private SnakeSituation snake; // snakeSituation 스크립트
 
     private string uiStr; // 자막에 들어갈 내용
 
@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
         cpr = cprSituation.GetComponent<CPRSituation>();
         fracture = fractureSituation.GetComponent<FractureSituation>();
         bee = beeSituation.GetComponent<BeeSituation>();
+        snake = snakeSituation.GetComponent<SnakeSituation>();
 
         playerScript = player.GetComponent<Player>();
         hellicopterScript = hellicopter.GetComponent<Hellicopter>();
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         setUICPR(); // CPR 상황에서의 UI를 관리
         setUIFracture(); // Fracture 상황에서의 UI를 관리
+        setUISnake(); // Snake 상황에서의 UI를 관리
 
         if (activeExitBtn && Input.GetKeyDown(KeyCode.Escape)) { finishSituation(); }
     }
@@ -332,10 +334,6 @@ public class GameManager : MonoBehaviour
 
 
 
-
-
-
-
     //Fracture UI
     public void setUIFracture()
     {
@@ -355,19 +353,19 @@ public class GameManager : MonoBehaviour
         }
 
         // 119 신고 요청
-        if (!fracture.didCall119 && playerScript.rayCollObject != null && playerScript.rayCollObject.name == "For Fracture 119" && playerScript.doAction())
-        {
-            uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
-            situationMainText.color = Color.yellow;
-            setText(situationMainText, uiStr);
-            fracture.didCall119 = true;
+        //if (!fracture.didCall119 && playerScript.rayCollObject != null && playerScript.rayCollObject.name == "For Fracture 119" && playerScript.doAction())
+        //{
+        //    uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
+        //    situationMainText.color = Color.yellow;
+        //    setText(situationMainText, uiStr);
+        //    fracture.didCall119 = true;
 
-            // 2초 대기 후 실행할 내용
-            StartCoroutine(DelayedAction(2f, () =>
-            {
-                fracture.isTakeOff = true; // 옷 제거해야함
-            }));
-        }
+        //    // 2초 대기 후 실행할 내용
+        //    StartCoroutine(DelayedAction(2f, () =>
+        //    {
+        //        fracture.isTakeOff = true; // 옷 제거해야함
+        //    }));
+        //}
 
         //손상 부위를 확인하기 위해 환부의 옷 제거
         if (fracture.didCall119&&fracture.isTakeOff && !fracture.isPress &&!fracture.didTakeOff)
@@ -495,6 +493,93 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+
+
+
+    // Snake 상황에서 UI 관리
+    public void setUISnake()
+    {
+        // 환자가 쓰러졌다면
+        if (snake.isPatientDown && !snake.isPatientCons)
+        {
+            situationMainTextPanel.SetActive(true);
+            uiStr = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
+            setText(situationMainText, uiStr);
+        }
+
+        // 환자의 의식을 파악해야 하는 상황
+        if (snake.isPatientCons && !snake.isCall119)
+        {
+            uiStr = "\"괜찮으세요? 움직이지 마세요.\"라고 말하며\n환자를 안정시키고 최대한 움직이지 않게 해주세요.\n(R키를 눌러 액션)";
+            setText(situationMainText, uiStr);
+        }
+
+        // 의식을 파악해야 하는 상황에서 R키 액션을 취함
+        if (snake.isPatientCons && !snake.didPatientCons && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+            uiStr = "\"괜찮으세요? 움직이지 마세요.\"";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+
+            snake.didPatientCons = true; // 환자 의식 파악 완료함
+        }
+
+        // 의식 파악까지 완료한 상황 (자막 유지)
+        if (snake.didPatientCons && !snake.isCall119)
+        {
+            uiStr = "\"괜찮으세요?\"";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                snake.isCall119 = true; // 다른 사람들에게 도움을 요청해야함
+            }));
+
+        }
+
+        // 다른 사람에게 도움을 요청해야 하는 상황
+        if (snake.isCall119 && !snake.didCall119)
+        {
+            uiStr = "환자가 의식이 없습니다.\n주변 사람들에게 도움을 요청하고 CPR을 수행하세요.\n(R키를 눌러 액션)";
+            situationMainText.color = Color.white;
+            setText(situationMainText, uiStr);
+        }
+
+        // 119 불러달라고 해야 하는 순서
+        if (snake.isCall119 && !snake.didCall119 && playerScript.rayCollObject.name == "For Snake 119" && playerScript.doAction())
+        {
+            uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
+            situationMainText.color = Color.yellow;
+            setText(situationMainText, uiStr);
+            snake.didCall119 = true;
+        }
+
+        // 119 불렀으면 자막 유지
+        if (snake.didCall119 )
+        {
+            setText(situationMainText, uiStr);
+        }
+
+  
+
+     
+
+
+        // Snake 상황 끝!
+        if (snake.finishSnake)
+        {
+            uiStr = "119 구조대가 도착합니다.";
+            setText(situationMainText, uiStr);
+
+            moveHellicopter();
+            activeExitBtn = true; // esc 버튼 활성화
+        }
+
+    }
 
     // delay만큼 대기하는 코루틴
     private IEnumerator DelayedAction(float delay, System.Action action)
