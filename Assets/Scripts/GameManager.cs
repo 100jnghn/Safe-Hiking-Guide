@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     public GameObject fractureSituation;// Fracture 상황을 관리 (Start Position Fracture)
     private FractureSituation fracture;// fractureSituation 오브젝트의 Component인 FractureSituation 스크립트를 가져옴
 
+    public GameObject beeSituation; // Bee 상황을 관리
+    private BeeSituation bee; // beeSituation 스크립트
+
     private string uiStr; // 자막에 들어갈 내용
 
     public enum Mode { Nothing, CPR, Fracture, Snake, Bee };
@@ -41,6 +44,8 @@ public class GameManager : MonoBehaviour
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
         fracture = fractureSituation.GetComponent<FractureSituation>();
+        bee = beeSituation.GetComponent<BeeSituation>();
+
         playerScript = player.GetComponent<Player>();
         hellicopterScript = hellicopter.GetComponent<Hellicopter>();
 
@@ -72,6 +77,9 @@ public class GameManager : MonoBehaviour
     // 상황 끝
     public void finishSituation()
     {
+        StopAllCoroutines(); // 실행중인 코루틴 모두 종료시킴
+
+
         // 모드 초기화
         mode = Mode.Nothing;
 
@@ -92,6 +100,8 @@ public class GameManager : MonoBehaviour
         // 카메라 세팅
         playerCam.SetActive(false); // 플레이어 시점의 카메라
         startSceneCam.SetActive(true); // 시작 화면 카메라
+
+        Debug.Log("Finish Situations");
 }
 
     // 헬리콥터 이동시키는 함수
@@ -133,8 +143,10 @@ public class GameManager : MonoBehaviour
     // 시작 메뉴 화면에서 벌에 쏘이는 상황 클릭
     public void startBee()
     {
+        mode = Mode.Bee;
         startSituation();
-
+        playerCam.SetActive(false);
+        bee.StartCoroutine("startSituation");
     }
 
     // CPR 상황에서 UI 관리
