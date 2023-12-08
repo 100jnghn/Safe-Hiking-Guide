@@ -221,6 +221,10 @@ public class Player : MonoBehaviour
             {
                 fracture.isPatientCons = true; // 구조요청을 해야하는 상태 On
             }
+            if (snake.isPatientDown & !snake.isPatientCons) // 환자가 쓰러진 상태
+            {
+                snake.isPatientCons = true; // 구조요청을 해야하는 상태 On
+            }
         }
     }
 }

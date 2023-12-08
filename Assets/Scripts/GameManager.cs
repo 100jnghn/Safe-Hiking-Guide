@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject artificialResHintImg; // 인공호흡 힌트 이미지
     public GameObject pressHintImg; // 지혈 힌트 이미지
     public GameObject splintHintImg;// 부목 대기 힌트 이미지
+    public GameObject tieHintImg;//뱀물림 묶기 힌트 이미지
 
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = snakeSituation.transform.position;// 시작 위치 설정
         startSituation();
         snake.StartCoroutine("startSituation");
-
+        player.transform.rotation = snake.playerStartPos.rotation;
         startSituation();
 
     }
@@ -508,11 +509,12 @@ public class GameManager : MonoBehaviour
             uiStr = "환자가 발생했습니다!\n가까이 다가가 상태를 파악해 주세요.";
             setText(situationMainText, uiStr);
         }
+ 
 
         // 환자의 의식을 파악해야 하는 상황
         if (snake.isPatientCons && !snake.isCall119)
         {
-            uiStr = "\"괜찮으세요? 움직이지 마세요.\"라고 말하며\n환자를 안정시키고 최대한 움직이지 않게 해주세요.\n(R키를 눌러 액션)";
+            uiStr = "환자가 뱀에 물렸습니다.\n환자를 최대한 움직이지 않게 해주세요.\n(R키를 눌러 액션)";
             setText(situationMainText, uiStr);
         }
 
@@ -529,7 +531,7 @@ public class GameManager : MonoBehaviour
         // 의식 파악까지 완료한 상황 (자막 유지)
         if (snake.didPatientCons && !snake.isCall119)
         {
-            uiStr = "\"괜찮으세요?\"";
+            uiStr = "\"괜찮으세요? 움직이지 마세요.\"";
             situationMainText.color = Color.yellow;
             setText(situationMainText, uiStr);
 
@@ -544,34 +546,127 @@ public class GameManager : MonoBehaviour
         // 다른 사람에게 도움을 요청해야 하는 상황
         if (snake.isCall119 && !snake.didCall119)
         {
-            uiStr = "환자가 의식이 없습니다.\n주변 사람들에게 도움을 요청하고 CPR을 수행하세요.\n(R키를 눌러 액션)";
+            uiStr = "주변 사람에게 119 구조 요청을 부탁하세요\n(R키를 눌러 액션)";
             situationMainText.color = Color.white;
             setText(situationMainText, uiStr);
         }
 
         // 119 불러달라고 해야 하는 순서
-        if (snake.isCall119 && !snake.didCall119 && playerScript.rayCollObject.name == "For Snake 119" && playerScript.doAction())
+        if (snake.isCall119 && !snake.didCall119 && playerScript.rayCollObject.name == "For Snake  119" && playerScript.doAction())
         {
             uiStr = "~~~이신 분 119에 구조 요청 부탁드립니다.";
             situationMainText.color = Color.yellow;
             setText(situationMainText, uiStr);
             snake.didCall119 = true;
+            // 2초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(2f, () =>
+                {
+                    snake.isCalmDown = true;
+                }));
         }
 
         // 119 불렀으면 자막 유지
-        if (snake.didCall119 )
+        if (snake.didCall119 && snake.isCalmDown && !snake.didCalmDown)
         {
+            situationMainText.color = Color.white;
+            uiStr = "흥분하면 독이 더 빨리 퍼지므로 환자를 안정시키세요.\n(R키를 눌러 액션)";
             setText(situationMainText, uiStr);
+
         }
 
-  
+        //환자 안정
+        if (snake.isCalmDown && !snake.didCalmDown && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+                snake.didCalmDown = true;
+        }
+        if (snake.didCalmDown && !snake.isRemove)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "흥분하면 독이 더 빨리 퍼집니다. 심호흡을 해서 안정을 취하세요.";
+            setText(situationMainText, uiStr);
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                snake.isRemove = true;
+            }));
+        }
 
-     
+        // 순환을 방해하는 것 제거
+        if (snake.isRemove && !snake.didRemove)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "반지나 시계 등 부어오르면서 혈액 순환을 방해할 수 있는 물건을 제거해주세요.\n(R키를 눌러 액션)";
+            setText(situationMainText, uiStr);
+        }
+        if (snake.isRemove && !snake.didRemove && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+                snake.didRemove = true;
+        }
+        if (snake.didRemove && !snake.isDown)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "(혈액 순환을 방해할 수 있는 물건을 제거했습니다.)";
+            setText(situationMainText, uiStr);
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                snake.isDown = true;
+            }));
+        }
 
+        //물린 부위 심장보다 아래로
+        if (snake.isDown && !snake.didDown)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "물린 부위를 심장보다 아래로 가게 해주세요.\n(R키를 눌러 액션)";
+            setText(situationMainText, uiStr);
+        }
+        if (snake.isDown && !snake.didDown && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+                snake.didDown = true;
+        }
+        if (snake.didDown && !snake.isTie)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "(물린 부위를 심장보다 아래로 가게 두었습니다.)";
+            setText(situationMainText, uiStr);
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                snake.isTie = true;
+            }));
+        }
+
+        //붓는 경우 묶기
+        if (snake.isTie && !snake.didTie)
+        {
+            tieHintImg.SetActive(true);
+            situationMainText.color = Color.white;
+            uiStr = "이미지 UI를 참고하여 물린 부위에서 \n5~10cm정도 심장 쪽에서 가까운 부위를 묶어주세요.\n너무 꽉 조일 경우 2차 손상을 가져올 수 있으니 주의해주세요.\n(R키를 눌러 액션)";
+            setText(situationMainText, uiStr);
+        }
+        if (snake.isTie && playerScript.rayCollObject.tag == "Patient" && playerScript.doAction())
+        {
+            snake.didTie = true;
+        }
+        if (snake.didTie && !snake.finishSnake)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "(손수건으로 5~10cm정도 심장 쪽에서 가까운 부위를 묶었습니다.)";
+            setText(situationMainText, uiStr);
+            // 3초 대기 후 실행할 내용
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                snake.finishSnake = true;
+            }));
+        }
+        
 
         // Snake 상황 끝!
         if (snake.finishSnake)
         {
+            tieHintImg.SetActive(false);
+
             uiStr = "119 구조대가 도착합니다.";
             setText(situationMainText, uiStr);
 

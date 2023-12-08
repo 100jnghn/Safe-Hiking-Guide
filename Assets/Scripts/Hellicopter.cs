@@ -14,6 +14,7 @@ public class Hellicopter : MonoBehaviour
     public Transform startPos; // 헬리콥터 시작 위치
     public Transform destinationCPR; // CPR 상황 도착 위치
     public Transform destinationFracture; // 골절 상황 도착 위치
+    public Transform destinationSnake; // 뱀물림 상황 도착 위치
 
     public AudioSource sound; // 헬리콥터 소리
 
@@ -59,6 +60,10 @@ public class Hellicopter : MonoBehaviour
 
             case GameManager.Mode.Fracture:
                 transform.position = Vector3.Lerp(transform.position, destinationFracture.position, 0.003f);
+                break;
+
+            case GameManager.Mode.Snake:
+                transform.position = Vector3.Lerp(transform.position, destinationSnake.position, 0.003f);
                 break;
         }
 
