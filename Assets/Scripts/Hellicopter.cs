@@ -15,6 +15,7 @@ public class Hellicopter : MonoBehaviour
     public Transform destinationCPR; // CPR »óÈ² µµÂø À§Ä¡
     public Transform destinationFracture; // °ñÀý »óÈ² µµÂø À§Ä¡
     public Transform destinationSnake; // ¹ì¹°¸² »óÈ² µµÂø À§Ä¡
+    public Transform destinationBee; // ¹ú »óÈ² µµÂø À§Ä¡
 
     public AudioSource sound; // Çï¸®ÄßÅÍ ¼Ò¸®
 
@@ -64,6 +65,10 @@ public class Hellicopter : MonoBehaviour
 
             case GameManager.Mode.Snake:
                 transform.position = Vector3.Lerp(transform.position, destinationSnake.position, 0.003f);
+                break;
+
+            case GameManager.Mode.Bee:
+                transform.position = Vector3.Lerp(transform.position, destinationBee.position, 0.003f);
                 break;
         }
 

@@ -16,11 +16,16 @@ public class GameManager : MonoBehaviour
     public GameObject pressHintImg; // 지혈 힌트 이미지
     public GameObject splintHintImg;// 부목 대기 힌트 이미지
     public GameObject tieHintImg;//뱀물림 묶기 힌트 이미지
+    public GameObject cardHintImg; // 카드 벌침 제거 힌트 이미지
+    public GameObject icingHingImg; // 냉찜질 힌트 이미지
 
     public GameObject startSceneCam; // 시작 화면 카메라
     public GameObject playerCam; // 플레이어 시점의 카메라
     public GameObject player; // 플레이어 객체
     private Player playerScript; // 플레이어 스크립트
+
+    public GameObject beePlayer; // 벌 플레이어 객체
+    private BeePlayer beePlayerScript; // 스크립트
 
     public GameObject hellicopter; // 헬리콥터 오브젝트
     private Hellicopter hellicopterScript; // 헬리콥터 스크립트
@@ -52,6 +57,7 @@ public class GameManager : MonoBehaviour
         snake = snakeSituation.GetComponent<SnakeSituation>();
 
         playerScript = player.GetComponent<Player>();
+        beePlayerScript = beePlayer.GetComponent<BeePlayer>();
         hellicopterScript = hellicopter.GetComponent<Hellicopter>();
 
         mode = Mode.Nothing; // 시작은 아무런 모드가 아닌 상태
@@ -65,6 +71,7 @@ public class GameManager : MonoBehaviour
         setUICPR(); // CPR 상황에서의 UI를 관리
         setUIFracture(); // Fracture 상황에서의 UI를 관리
         setUISnake(); // Snake 상황에서의 UI를 관리
+        setUIBee(); // Bee 상황에서 UI 관리
 
         if (activeExitBtn && Input.GetKeyDown(KeyCode.Escape)) { finishSituation(); }
     }
@@ -674,6 +681,103 @@ public class GameManager : MonoBehaviour
             activeExitBtn = true; // esc 버튼 활성화
         }
 
+    }
+
+    // Bee 상황에서 UI 관리
+    public void setUIBee()
+    {
+        // 벌에 쏘임
+        if (bee.isAttacked && !bee.isCall119)
+        {
+            situationMainText.color = Color.white;
+            situationMainTextPanel.SetActive(true);
+            uiStr = "벌에 쏘였습니다!\n119에 연락을 취하고 응급처치를 시작하세요\n(Q를 눌러 액션).";
+            setText(situationMainText, uiStr);
+
+            if (beePlayerScript.doAction())
+            {
+                bee.isCall119 = true;
+
+            }
+        }
+
+        // 119 부름
+        if (bee.isCall119 && !bee.isCard)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "119를 불렀습니다.";
+            setText(situationMainText, uiStr);
+
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                bee.isCard = true;
+            }));
+        }
+
+        // 침 빼야함
+        if (bee.isCard && !bee.didCard)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "이미지를 참고하여 벌침을 제거하세요.";
+            setText(situationMainText, uiStr);
+            cardHintImg.SetActive(true);
+
+            if (beePlayerScript.doAction())
+            {
+                bee.didCard = true;
+            }
+        }
+
+        if (bee.didCard && !bee.isIcing)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "침을 제거했습니다.";
+            setText(situationMainText, uiStr);
+            cardHintImg.SetActive(false);
+
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                bee.isIcing = true;
+            }));
+        }
+
+        // 냉찜질 할 차례
+        if (bee.isIcing && !bee.didIcing)
+        {
+            situationMainText.color = Color.white;
+            uiStr = "이미지를 참고하여 냉찜질을 진행하세요.";
+            setText(situationMainText, uiStr);
+            icingHingImg.SetActive(true);
+
+            if (beePlayerScript.doAction())
+            {
+                bee.didIcing = true;
+            }
+        }
+
+        // 냉찜질 함
+        if (bee.didIcing && !bee.isKeepHigh)
+        {
+            situationMainText.color = Color.yellow;
+            uiStr = "냉찜질은 완료했습니다.";
+            setText(situationMainText, uiStr);
+            icingHingImg.SetActive(false);
+
+            StartCoroutine(DelayedAction(3f, () =>
+            {
+                bee.isKeepHigh = true;
+            }));
+        }
+
+        if (bee.isKeepHigh)
+        {
+            icingHingImg.SetActive(false);
+            uiStr = "119가 도착할 때까지 쏘인 부위를. 높이 유지하세요";
+            setText(situationMainText, uiStr);
+
+            moveHellicopter();
+            activeExitBtn = true; // esc 버튼 활성화
+        }
     }
 
     // delay만큼 대기하는 코루틴
