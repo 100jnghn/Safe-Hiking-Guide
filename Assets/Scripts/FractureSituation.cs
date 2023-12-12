@@ -127,23 +127,4 @@ public class FractureSituation : MonoBehaviour
         patient.transform.rotation = patientFallRotation; // 쓰러진 때의 회전 값으로 환자 회전
     }
 
-    public void Reset()
-    {
-        isPatientDown = false;  // 환자가 쓰러진 상황인가요?
-        isPatientCons = false;  // 환자 의식을 파악해야 하나요?
-        isHelpOther = false;    // 다른 사람에게 도움을 요청해야 하는 상황?
-        didCall119 = false; // 다른 사람에게 119 불러달라고 요청했는지?
-        isTakeOff = false; //손상 부위를 확인하기 위해 환부의 옷 제거
-        didTakeOff = false; //환부의 옷 제거수행완료
-        isPress = false; // 지혈 수행해야하는 상황
-        didPress = false; // 지혈 수행완료
-        isSplint = false; // 부목 수행해야하는 상황
-        didPickUp = false; // 부목 줍기
-        didSplint = false; //부목 수행완료
-        isIcing = false; //냉찜질 수행해야하는 상황
-        didIcing = false; //냉찜질 수행완료
-
-        patient.transform.position = patientStartPos.position;
-        patient.SetActive(false);
-    }
 }

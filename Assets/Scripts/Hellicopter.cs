@@ -74,9 +74,4 @@ public class Hellicopter : MonoBehaviour
 
     }
 
-    public void Reset()
-    {
-        this.transform.position = startPos.position;
-        hellicopter.SetActive(false);
-    }
 }

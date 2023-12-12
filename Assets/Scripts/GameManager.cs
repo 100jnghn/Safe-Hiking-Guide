@@ -47,8 +47,6 @@ public class GameManager : MonoBehaviour
     public enum Mode { Nothing, CPR, Fracture, Snake, Bee };
     public Mode mode; // 현재 어떤 모드인지 저장
 
-    private bool activeExitBtn; // esc 버튼을 눌러 메인 화면으로 갈 수 있는지 판단하는 변수
-
     void Start()
     {
         cpr = cprSituation.GetComponent<CPRSituation>();
@@ -72,8 +70,6 @@ public class GameManager : MonoBehaviour
         setUIFracture(); // Fracture 상황에서의 UI를 관리
         setUISnake(); // Snake 상황에서의 UI를 관리
         setUIBee(); // Bee 상황에서 UI 관리
-
-        if (activeExitBtn && Input.GetKeyDown(KeyCode.Escape)) { finishSituation(); }
     }
 
     // 상황 시작
@@ -92,28 +88,8 @@ public class GameManager : MonoBehaviour
     {
         StopAllCoroutines(); // 실행중인 코루틴 모두 종료시킴
 
-
         // 모드 초기화
         mode = Mode.Nothing;
-
-        // 각 상황들 변수 초기화
-        // 각 상황들 오브젝트 위치 초기화
-        cpr.Reset();
-        fracture.Reset();
-
-
-        // 헬리콥터 위치 초기화 + SetActive(false)
-        hellicopterScript.Reset();
-
-        // UI 세팅
-        situationUIPanel.SetActive(false); // 상황들의 UI
-        situationMainTextPanel.SetActive(false); // 자막 패널
-        startSceneUIPanel.SetActive(true); // 시작 화면 UI
-
-        // 카메라 세팅
-        playerCam.SetActive(false); // 플레이어 시점의 카메라
-        startSceneCam.SetActive(true); // 시작 화면 카메라
-
         Debug.Log("Finish Situations");
 }
 
@@ -333,7 +309,6 @@ public class GameManager : MonoBehaviour
             setText(situationMainText, uiStr);
 
             moveHellicopter();
-            activeExitBtn = true; // esc 버튼 활성화
         }
 
     }
@@ -496,7 +471,6 @@ public class GameManager : MonoBehaviour
             setText(situationMainText, uiStr);
 
             moveHellicopter();
-            activeExitBtn = true; // esc 버튼 활성화
         }
 
     }
@@ -678,7 +652,6 @@ public class GameManager : MonoBehaviour
             setText(situationMainText, uiStr);
 
             moveHellicopter();
-            activeExitBtn = true; // esc 버튼 활성화
         }
 
     }
@@ -776,7 +749,6 @@ public class GameManager : MonoBehaviour
             setText(situationMainText, uiStr);
 
             moveHellicopter();
-            activeExitBtn = true; // esc 버튼 활성화
         }
     }
 

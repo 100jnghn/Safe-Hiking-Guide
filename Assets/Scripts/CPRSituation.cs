@@ -108,22 +108,4 @@ public class CPRSituation : MonoBehaviour
         patient.transform.Translate(Vector3.forward * patientMoveSpeed * Time.deltaTime); // 환자 앞으로 이동
     }
 
-    public void Reset()
-    {
-        isPatientDown = false;  // 환자가 쓰러진 상황인가요?
-        isPatientCons = false;  // 환자 의식을 파악해야 하나요?
-        didPatientCons = false; // 환자 의식을 파악 완료했는지?
-        isHelpOther = false;    // 다른 사람에게 도움을 요청해야 하는 상황?
-        didCall119 = false; // 다른 사람에게 119 불러달라고 요청했는지?
-        didCallAED = false; // 다른 사람에게 AED 갖다달라고 요청했는지?
-        isChestPress = false; // 가슴 압박을 해야 하는 순서?
-        didChestPress = false; // 가슴 압박 수행했는지?
-        isArtificialRes = false; // 인공호흡 해야 하는 순서?
-        didArtificialRes = false; // 인공호흡 수행했는지?
-        finishCPR = false; // CPR 상황 종료
-
-        patient.transform.position = patientStartPos.position;
-        patient.SetActive(false);
-
-    }
 }
